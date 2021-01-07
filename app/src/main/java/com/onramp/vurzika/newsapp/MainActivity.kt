@@ -1,4 +1,4 @@
-package com.onramp.android.takehome
+package com.onramp.vurzika.newsapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
