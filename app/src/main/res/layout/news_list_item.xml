@@ -1,72 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:paddingStart="8dp"
-    android:paddingTop="8dp"
-    android:paddingEnd="16dp"
-    android:paddingBottom="8dp">
 
-    <ImageView
-        android:id="@+id/news_thumbnail"
-        android:layout_width="90dp"
-        android:layout_height="120dp"
-        tools:src="@tools:sample/avatars" />
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:paddingStart="8dp">
+    <data>
 
-        <TextView
-            android:id="@+id/news_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="3"
-            android:textAllCaps="true"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            tools:text="@sample/news.json/data/title" />
+        <import type="android.view.View" />
 
-        <TextView
-            android:id="@+id/news_site"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:textSize="12sp"
-            tools:text="@sample/news.json/data/newsSite" />
+        <variable
+            name="newsArticle"
+            type="com.onramp.vurzika.newsapp.models.NewsArticle" />
 
-    </LinearLayout>
+        <variable
+            name="clickListener"
+            type="com.onramp.vurzika.newsapp.NewsArticleClickListener" />
+
+    </data>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="16dp"
-        android:orientation="vertical">
+        android:onClick="@{() -> clickListener.onClick(newsArticle)}"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp">
 
-        <TextView
-            android:id="@+id/date"
+        <ImageView
+            android:id="@+id/news_thumbnail"
+            android:layout_width="90dp"
+            android:layout_height="120dp"
+            android:visibility="@{newsArticle.thumbnailUrl == null ? View.GONE : View.VISIBLE}"
+            tools:src="@tools:sample/avatars" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingStart="8dp">
+
+            <TextView
+                android:id="@+id/news_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:text="@{newsArticle.title}"
+                android:textAllCaps="true"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                tools:text="@sample/news.json/data/title" />
+
+            <TextView
+                android:id="@+id/news_site"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="@{newsArticle.site}"
+                android:textSize="12sp"
+                tools:text="@sample/news.json/data/newsSite" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:textSize="12sp"
-            tools:text="@tools:sample/date/ddmmyy" />
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="16dp"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:textSize="12sp"
-            tools:text="@tools:sample/date/hhmm" />
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:textSize="12sp"
+                tools:text="@tools:sample/date/ddmmyy" />
 
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:textSize="12sp"
+                tools:text="@tools:sample/date/hhmm" />
+
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+
+</layout>
