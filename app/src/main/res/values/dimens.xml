@@ -1,0 +1,5 @@
+<resources>
+    <dimen name="padding_components">16dp</dimen>
+    <dimen name="padding_side">24dp</dimen>
+    <dimen name="padding_side_x1.5">36dp</dimen>
+</resources>

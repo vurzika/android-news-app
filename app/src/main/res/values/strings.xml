@@ -1,11 +1,17 @@
 <resources>
     <string name="app_name">News App</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_settings">Application Settings</string>
 
-    <!-- Settings Titles: News List -->
+    <!-- Activity: Settings -->
+    <string name="title_activity_settings">Application Settings</string>
     <string name="settings_header_news_list">News List</string>
     <string name="settings_show_thumbnails">Show Thumbnails in the News List</string>
     <string name="headlines">Headlines</string>
     <string name="favorites">Favorites</string>
+
+    <!-- News List: Menu -->
+    <string name="action_settings">Settings</string>
+
+    <!-- News Details: Menu -->
+    <string name="action_open_with">Open With …</string>
+    <string name="action_copy_link">Copy Link</string>
 </resources>
