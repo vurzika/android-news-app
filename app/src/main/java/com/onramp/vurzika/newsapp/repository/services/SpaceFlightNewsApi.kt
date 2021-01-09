@@ -1,7 +1,6 @@
 package com.onramp.vurzika.newsapp.repository.services
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
 import retrofit2.http.GET
@@ -9,10 +8,10 @@ import retrofit2.http.Path
 
 interface SpaceFlightNewsApiService {
     @GET("/api/v2/articles")
-    fun getNewsArticles(): Call<List<ArticleSummary>>
+    suspend fun getNewsArticles(): List<ArticleSummary>
 
     @GET("/api/v2/articles/{id}")
-    fun getArticle(@Path("id") articleId: String): Call<ArticleDetails>
+    suspend fun getArticle(@Path("id") articleId: String): ArticleDetails
 }
 
 object SpaceFlightNewsApi {
