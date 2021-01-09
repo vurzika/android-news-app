@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.onramp.vurzika.newsapp.databinding.NewsListItemBinding
 import com.onramp.vurzika.newsapp.models.NewsArticle
-import com.squareup.picasso.Picasso
 
 class NewsArticlesListAdapter(private val clickListener: NewsArticleClickListener) :
         ListAdapter<NewsArticle, NewsArticlesListAdapter.ViewHolder>(NewsArticleDiffCallback()) {
@@ -30,16 +29,6 @@ class NewsArticlesListAdapter(private val clickListener: NewsArticleClickListene
             newsArticleId = item.id
             binding.newsArticle = item
             binding.clickListener = clickListener
-
-            // download thumbnail if exists
-            // TODO: move to data-binding layer
-            item.thumbnailUrl?.let {
-                Picasso.get()
-                        .load(item.thumbnailUrl)
-                        .resize(80, 120)
-                        .centerInside()
-                        .into(binding.newsThumbnail)
-            }
         }
 
         companion object {

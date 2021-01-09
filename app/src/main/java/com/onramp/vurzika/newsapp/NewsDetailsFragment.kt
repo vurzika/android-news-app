@@ -17,7 +17,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.onramp.vurzika.newsapp.databinding.FragmentNewsDetailsBinding
 import com.onramp.vurzika.newsapp.models.NewsArticle
 import com.onramp.vurzika.newsapp.utils.DemoDataUtils
-import com.squareup.picasso.Picasso
 
 class NewsDetailsFragment : Fragment() {
 
@@ -37,14 +36,6 @@ class NewsDetailsFragment : Fragment() {
         newsArticle = DemoDataUtils.getNewsDetails(args.newsArticleId)!!
 
         binding.newsArticle = newsArticle
-
-        // TODO: move to data binding
-        newsArticle.thumbnailUrl?.let {
-            Picasso.get()
-                    .load(newsArticle.thumbnailUrl)
-                    .fit()
-                    .into(binding.toolbarImage)
-        }
 
         return binding.root
     }

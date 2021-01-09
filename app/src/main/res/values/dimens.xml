@@ -1,5 +1,14 @@
 <resources>
     <dimen name="padding_components">16dp</dimen>
-    <dimen name="padding_side">24dp</dimen>
-    <dimen name="padding_side_x1.5">36dp</dimen>
+    <dimen name="padding_side">16dp</dimen>
+    <dimen name="padding_side_x2">32dp</dimen>
+
+    <!-- List Item -->
+    <dimen name="padding_side_list_image_extra">4dp</dimen>
+    <dimen name="padding_divider_with_image">120dp</dimen>
+
+    <dimen name="size_list_item_height">88dp</dimen>
+    <dimen name="size_list_item_image_width">100dp</dimen>
+    <dimen name="size_list_item_image_height">56dp</dimen>
+
 </resources>

@@ -1,6 +1,5 @@
 package com.onramp.vurzika.newsapp
 
-import android.graphics.drawable.ClipDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -14,7 +13,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
-import androidx.recyclerview.widget.DividerItemDecoration
 import com.onramp.vurzika.newsapp.databinding.FragmentNewsListBinding
 import com.onramp.vurzika.newsapp.utils.DemoDataUtils
 
@@ -39,9 +37,6 @@ class NewsListFragment : Fragment() {
         )
 
         binding.newsList.adapter = adapter
-
-        val divider = DividerItemDecoration(context, ClipDrawable.HORIZONTAL)
-        binding.newsList.addItemDecoration(divider)
 
         adapter.submitList(
                 DemoDataUtils.getLatestNews()
