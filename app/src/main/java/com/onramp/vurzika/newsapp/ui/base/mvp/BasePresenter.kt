@@ -5,6 +5,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlin.coroutines.CoroutineContext
 
+/**
+ * MVP: Base Presenter class with coroutines support
+ */
 abstract class BasePresenter<V : BaseContract.View> : BaseContract.Presenter<V>, CoroutineScope {
 
     protected var view: V? = null

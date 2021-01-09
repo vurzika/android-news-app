@@ -36,7 +36,7 @@ class NewsDetailsFragment : BaseNavigationFragment<NewsDetailsContract.View>(), 
     // MVP
 
     override fun createPresenter(): BaseContract.Presenter<NewsDetailsContract.View> {
-        return NewsDetailsPresenter(args.newsArticleId);
+        return NewsDetailsPresenter(args.newsArticleId)
     }
 
     override fun showLoadingIndicator(visible: Boolean) {

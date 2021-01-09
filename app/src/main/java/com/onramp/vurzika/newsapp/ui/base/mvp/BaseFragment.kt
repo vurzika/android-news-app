@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 
-
+/**
+ * MVP: Base fragment that automatically links presenter's and fragment's lifecycle events
+ */
 abstract class BaseFragment<T : BaseContract.View> : Fragment() {
 
     protected lateinit var presenter: BaseContract.Presenter<T>

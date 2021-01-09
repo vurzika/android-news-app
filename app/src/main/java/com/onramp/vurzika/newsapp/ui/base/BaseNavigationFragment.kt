@@ -10,9 +10,17 @@ import androidx.navigation.ui.setupWithNavController
 import com.onramp.vurzika.newsapp.ui.base.mvp.BaseContract
 import com.onramp.vurzika.newsapp.ui.base.mvp.BaseFragment
 
-// Fragment responsible for handling navigation component integration
-abstract class BaseNavigationFragment<T : BaseContract.View>() : BaseFragment<T>() {
+/**
+ * Fragment responsible for handling common logic for navigation component integration
+ */
+abstract class BaseNavigationFragment<T : BaseContract.View> : BaseFragment<T>() {
 
+    /**
+     * Provides reference to fragment's toolbar that should be used as main
+     * toolbar for currently displayed fragment in navigation component
+     *
+     * This is required to correctly display toolbar specific elements such as options menu
+     */
     protected abstract fun getToolbar(): Toolbar
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -29,7 +37,7 @@ abstract class BaseNavigationFragment<T : BaseContract.View>() : BaseFragment<T>
     override fun onResume() {
         super.onResume()
 
-        // Navigation: use fragment's toolbar as activity's main toolbar to populate menu
+        // use fragment's toolbar as activity's main toolbar to populate menu
         (requireActivity() as AppCompatActivity).setSupportActionBar(getToolbar())
     }
 }
