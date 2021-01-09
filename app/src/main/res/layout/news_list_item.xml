@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="newsArticle"
+            type="com.onramp.vurzika.newsapp.models.NewsArticle" />
+
+        <variable
+            name="clickListener"
+            type="com.onramp.vurzika.newsapp.NewsArticleClickListener" />
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_list_item_height">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:onClick="@{() -> clickListener.onClick(newsArticle)}"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/padding_components"
+            android:paddingEnd="@dimen/padding_side"
+            android:paddingBottom="@dimen/padding_components">
+
+            <ImageView
+                android:id="@+id/news_thumbnail"
+                android:layout_width="@dimen/size_list_item_image_width"
+                android:layout_height="@dimen/size_list_item_image_height"
+                android:layout_marginEnd="@dimen/padding_side_list_image_extra"
+                android:scaleType="centerCrop"
+                android:visibility="@{newsArticle.thumbnailUrl == null ? View.GONE : View.VISIBLE}"
+                app:imageUrl="@{newsArticle.thumbnailUrl}"
+                tools:src="@tools:sample/avatars" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/padding_components"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="@{newsArticle.title}"
+                    android:textAppearance="?textAppearanceSubtitle2"
+                    tools:text="@sample/news.json/data/title" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="@{newsArticle.site}"
+                        android:textAppearance="?textAppearanceCaption"
+                        tools:text="@sample/news.json/data/newsSite" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{newsArticle.publicationDate.toLocaleString()}"
+                        android:textAppearance="?textAppearanceCaption"
+                        tools:text="@tools:sample/date/ddmmyy" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
+            android:background="?android:attr/dividerVertical"
+            app:dividerOffset="@{newsArticle.thumbnailUrl == null ? @dimen/padding_components : @dimen/padding_divider_with_image}" />
+
+    </FrameLayout>
+
+</layout>

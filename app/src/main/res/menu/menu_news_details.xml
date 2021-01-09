@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_copy_link"
+        android:icon="@drawable/ic_link_copy"
+        android:orderInCategory="100"
+        android:title="@string/action_copy_link"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_open_with"
+        android:icon="@drawable/ic_open_with"
+        android:orderInCategory="101"
+        android:title="@string/action_open_with"
+        app:showAsAction="ifRoom" />
+</menu>
