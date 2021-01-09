@@ -1,6 +1,5 @@
 package com.onramp.vurzika.newsapp.ui.newsdetails.view
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -8,81 +7,36 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupWithNavController
 import com.onramp.vurzika.newsapp.R
 import com.onramp.vurzika.newsapp.databinding.FragmentNewsDetailsBinding
 import com.onramp.vurzika.newsapp.repository.models.NewsArticle
+import com.onramp.vurzika.newsapp.ui.base.BaseNavigationFragment
+import com.onramp.vurzika.newsapp.ui.base.mvp.BaseContract
 import com.onramp.vurzika.newsapp.ui.newsdetails.NewsDetailsContract
 import com.onramp.vurzika.newsapp.ui.newsdetails.presenter.NewsDetailsPresenter
 
-class NewsDetailsFragment : Fragment(), NewsDetailsContract.View {
+class NewsDetailsFragment : BaseNavigationFragment<NewsDetailsContract.View>(), NewsDetailsContract.View {
 
     private lateinit var binding: FragmentNewsDetailsBinding
 
     private val args: NewsDetailsFragmentArgs by navArgs()
 
-    private lateinit var presenter: NewsDetailsPresenter
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_news_details, container, false)
 
-        //presenter = NewsDetailsPresenter(args.newsArticleId)
-
         setHasOptionsMenu(true)
-
-        setupNavigationComponent()
 
         return binding.root
     }
 
-    // UI Navigation Support
+    // MVP
 
-    private fun setupNavigationComponent() {
-        // connect fragment's toolbar to navigation graph
-        val navController = findNavController()
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
-
-        binding.toolbar
-                .setupWithNavController(navController, appBarConfiguration)
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        setCurrentToolbarAsMain()
-    }
-
-    private fun setCurrentToolbarAsMain() {
-        // Navigation: use fragment's toolbar as activity's main toolbar to populate menu
-        (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
-    }
-
-    // View
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        presenter = NewsDetailsPresenter(args.newsArticleId)
-        presenter.onAttach(this)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        presenter.onViewCreated()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        presenter.onDestroy()
+    override fun createPresenter(): BaseContract.Presenter<NewsDetailsContract.View> {
+        return NewsDetailsPresenter(args.newsArticleId);
     }
 
     override fun showLoadingIndicator(visible: Boolean) {
@@ -97,7 +51,7 @@ class NewsDetailsFragment : Fragment(), NewsDetailsContract.View {
         // TODO("Not yet implemented")
     }
 
-    // Options Menu
+    // Options Menu Configuration
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_news_details, menu)
@@ -111,5 +65,11 @@ class NewsDetailsFragment : Fragment(), NewsDetailsContract.View {
             R.id.action_open_with -> true
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    // Navigation UI Configuration
+
+    override fun getToolbar(): Toolbar {
+        return binding.toolbar
     }
 }

@@ -1,6 +1,7 @@
 package com.onramp.vurzika.newsapp.ui.base.mvp
 
 class BaseContract {
+
     interface View {
     }
 
