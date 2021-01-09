@@ -1,5 +1,6 @@
-package com.onramp.vurzika.newsapp
+package com.onramp.vurzika.newsapp.ui.newsdetails.view
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -7,7 +8,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -15,57 +15,36 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.onramp.vurzika.newsapp.R
 import com.onramp.vurzika.newsapp.databinding.FragmentNewsDetailsBinding
 import com.onramp.vurzika.newsapp.repository.models.NewsArticle
-import com.onramp.vurzika.newsapp.repository.services.ArticleDetails
-import com.onramp.vurzika.newsapp.repository.services.SpaceFlightNewsApi
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.onramp.vurzika.newsapp.ui.newsdetails.NewsDetailsContract
+import com.onramp.vurzika.newsapp.ui.newsdetails.presenter.NewsDetailsPresenter
 
-class NewsDetailsFragment : Fragment() {
+class NewsDetailsFragment : Fragment(), NewsDetailsContract.View {
 
     private lateinit var binding: FragmentNewsDetailsBinding
 
-    private lateinit var newsArticle: NewsArticle
-
     private val args: NewsDetailsFragmentArgs by navArgs()
+
+    private lateinit var presenter: NewsDetailsPresenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_news_details, container, false)
 
+        //presenter = NewsDetailsPresenter(args.newsArticleId)
+
         setHasOptionsMenu(true)
 
-        // Test: Load Data
-        SpaceFlightNewsApi.service.getArticle(args.newsArticleId).enqueue(object : Callback<ArticleDetails> {
-            override fun onResponse(call: Call<ArticleDetails>, response: Response<ArticleDetails>) {
-                val article = response.body()?.let {
-                    NewsArticle(
-                            id = args.newsArticleId,
-                            title = it.title,
-                            summary = it.summary ?: "Article Summary Not Available",
-                            newsSite = it.newsSite ?: "Unknown Source",
-                            publicationDate = it.publishedAt,
-                            thumbnailUrl = it.imageUrl
-                    )
-                }
-
-                newsArticle = article!!
-                binding.newsArticle = newsArticle
-            }
-
-            override fun onFailure(call: Call<ArticleDetails>, t: Throwable) {
-                Toast.makeText(context, t.message, Toast.LENGTH_LONG).show()
-            }
-        })
+        setupNavigationComponent()
 
         return binding.root
     }
 
     // UI Navigation Support
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    private fun setupNavigationComponent() {
         // connect fragment's toolbar to navigation graph
         val navController = findNavController()
         val appBarConfiguration = AppBarConfiguration(navController.graph)
@@ -77,8 +56,45 @@ class NewsDetailsFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        // use fragment's toolbar as activity's main toolbar to populate menu
+        setCurrentToolbarAsMain()
+    }
+
+    private fun setCurrentToolbarAsMain() {
+        // Navigation: use fragment's toolbar as activity's main toolbar to populate menu
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
+    }
+
+    // View
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        presenter = NewsDetailsPresenter(args.newsArticleId)
+        presenter.onAttach(this)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        presenter.onViewCreated()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        presenter.onDestroy()
+    }
+
+    override fun showLoadingIndicator(visible: Boolean) {
+        // TODO("Not yet implemented")
+    }
+
+    override fun showArticle(newsArticle: NewsArticle) {
+        binding.newsArticle = newsArticle
+    }
+
+    override fun showError(errorMessage: String) {
+        // TODO("Not yet implemented")
     }
 
     // Options Menu
