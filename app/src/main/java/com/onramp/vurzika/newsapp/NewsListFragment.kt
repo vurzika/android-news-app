@@ -7,6 +7,8 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import android.widget.Toast.LENGTH_LONG
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -14,7 +16,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.onramp.vurzika.newsapp.databinding.FragmentNewsListBinding
-import com.onramp.vurzika.newsapp.utils.DemoDataUtils
+import com.onramp.vurzika.newsapp.repository.models.NewsArticle
+import com.onramp.vurzika.newsapp.repository.services.ArticleSummary
+import com.onramp.vurzika.newsapp.repository.services.SpaceFlightNewsApi
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class NewsListFragment : Fragment() {
 
@@ -38,9 +45,26 @@ class NewsListFragment : Fragment() {
 
         binding.newsList.adapter = adapter
 
-        adapter.submitList(
-                DemoDataUtils.getLatestNews()
-        )
+        SpaceFlightNewsApi.service.getNewsArticles().enqueue(object : Callback<List<ArticleSummary>> {
+            override fun onResponse(call: Call<List<ArticleSummary>>, response: Response<List<ArticleSummary>>) {
+                val articles = response.body()?.map {
+                    NewsArticle(
+                            id = it.id,
+                            title = it.title,
+                            summary = it.summary ?: "Article Summary Not Available",
+                            newsSite = it.newsSite ?: "Unknown Source",
+                            publicationDate = it.publishedAt,
+                            thumbnailUrl = it.imageUrl
+                    )
+                }
+
+                articles?.let { adapter.submitList(it) }
+            }
+
+            override fun onFailure(call: Call<List<ArticleSummary>>, t: Throwable) {
+                Toast.makeText(context, t.message, LENGTH_LONG).show()
+            }
+        })
 
         return binding.root
     }
