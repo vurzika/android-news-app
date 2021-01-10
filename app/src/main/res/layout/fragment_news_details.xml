@@ -9,14 +9,14 @@
 
         <variable
             name="newsArticle"
-            type="com.onramp.vurzika.newsapp.models.NewsArticle" />
+            type="com.onramp.vurzika.newsapp.repository.models.NewsArticle" />
 
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        tools:context=".ui.newslist.view.MainActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/app_bar"
@@ -58,7 +58,7 @@
                     android:elevation="0dp"
                     app:layout_collapseMode="pin"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                    app:title="@{newsArticle.summary}" />
+                    app:title="@{newsArticle.title}" />
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -85,7 +85,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@{newsArticle.site}"
+                    android:text="@{newsArticle.newsSite}"
                     android:textAppearance="?textAppearanceSubtitle1"
                     tools:text="@sample/news.json/data/newsSite">
 

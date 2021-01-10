@@ -1,4 +1,4 @@
-package com.onramp.vurzika.newsapp
+package com.onramp.vurzika.newsapp.ui.newslist.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.onramp.vurzika.newsapp.databinding.NewsListItemBinding
-import com.onramp.vurzika.newsapp.models.NewsArticle
+import com.onramp.vurzika.newsapp.repository.models.NewsArticle
 
 class NewsArticlesListAdapter(private val clickListener: NewsArticleClickListener) :
         ListAdapter<NewsArticle, NewsArticlesListAdapter.ViewHolder>(NewsArticleDiffCallback()) {

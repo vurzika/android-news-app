@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.newslist.view.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -22,9 +22,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SettingsActivity"
+            android:name=".ui.settings.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".ui.newslist.view.MainActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

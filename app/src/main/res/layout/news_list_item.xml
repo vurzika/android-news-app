@@ -10,11 +10,11 @@
 
         <variable
             name="newsArticle"
-            type="com.onramp.vurzika.newsapp.models.NewsArticle" />
+            type="com.onramp.vurzika.newsapp.repository.models.NewsArticle" />
 
         <variable
             name="clickListener"
-            type="com.onramp.vurzika.newsapp.NewsArticleClickListener" />
+            type="com.onramp.vurzika.newsapp.ui.newslist.view.NewsArticleClickListener" />
 
     </data>
 
@@ -68,7 +68,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:maxLines="1"
-                        android:text="@{newsArticle.site}"
+                        android:text="@{newsArticle.newsSite}"
                         android:textAppearance="?textAppearanceCaption"
                         tools:text="@sample/news.json/data/newsSite" />
 

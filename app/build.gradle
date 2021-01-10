@@ -59,6 +59,11 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.2'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.2'
+
+    // API integration: Retrofit + Jackson
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.retrofit2:converter-jackson:2.9.0"
+    implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.12.0"
 }
 repositories {
     maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }

@@ -1,8 +1,9 @@
-package com.onramp.vurzika.newsapp
+package com.onramp.vurzika.newsapp.ui.settings
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceFragmentCompat
+import com.onramp.vurzika.newsapp.R
 
 class SettingsActivity : AppCompatActivity() {
 
