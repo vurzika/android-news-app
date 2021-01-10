@@ -20,4 +20,10 @@ interface NewsArticlesDao {
 
     @Query("DELETE FROM news_articles")
     suspend fun deleteAll();
+
+    @Query("DELETE FROM news_articles WHERE id = :newsArticleId")
+    suspend fun delete(newsArticleId: String)
+
+    @Query("SELECT EXISTS(SELECT * FROM news_articles WHERE id = :newsArticleId)")
+    suspend fun checkIfExists(newsArticleId: String): Boolean
 }

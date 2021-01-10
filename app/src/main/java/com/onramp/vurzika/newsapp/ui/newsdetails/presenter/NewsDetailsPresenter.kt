@@ -31,4 +31,22 @@ class NewsDetailsPresenter @Inject constructor() : BasePresenter<NewsDetailsCont
             }
         }
     }
+
+    override fun onSetFavoriteSelected() {
+        launch {
+            try {
+                if (newsArticle.isStored) {
+                    newsRepository.deleteNewsArticle(newsArticleId)
+                } else {
+                    newsRepository.saveNewsArticle(newsArticle)
+                }
+
+                newsArticle.isStored = !newsArticle.isStored
+
+                view?.showArticle(newsArticle)
+            } catch (error: Exception) {
+                view?.showError(error.message ?: "Unknown error")
+            }
+        }
+    }
 }

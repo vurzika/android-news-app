@@ -3,6 +3,7 @@ package com.onramp.vurzika.newsapp.repository.models
 import android.graphics.Bitmap
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import java.util.Date
 
@@ -19,4 +20,7 @@ data class NewsArticle(
 
         @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
         val thumbnailData: Bitmap? = null
-)
+) {
+        @Ignore
+        var isStored: Boolean = false
+}

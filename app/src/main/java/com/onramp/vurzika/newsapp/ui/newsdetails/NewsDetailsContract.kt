@@ -14,5 +14,8 @@ class NewsDetailsContract {
         fun showError(errorMessage: String)
     }
 
-    interface Presenter : BaseContract.Presenter<View>
+    interface Presenter : BaseContract.Presenter<View> {
+
+        fun onSetFavoriteSelected()
+    }
 }

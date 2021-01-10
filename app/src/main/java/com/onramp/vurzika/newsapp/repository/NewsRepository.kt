@@ -37,6 +37,16 @@ class NewsRepository @Inject constructor(
                     publicationDate = it.publishedAt,
                     thumbnailUrl = it.imageUrl
             )
+        }.also {
+            it.isStored = database.newsArticlesDao().checkIfExists(newsArticleId)
         }
+    }
+
+    suspend fun deleteNewsArticle(newsArticleId: String) = withContext(Dispatchers.IO) {
+        database.newsArticlesDao().delete(newsArticleId)
+    }
+
+    suspend fun saveNewsArticle(newsArticle: NewsArticle) = withContext(Dispatchers.IO) {
+        database.newsArticlesDao().saveNewsArticle(newsArticle)
     }
 }

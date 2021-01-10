@@ -39,6 +39,10 @@ class NewsDetailsFragment : BaseNavigationFragment<NewsDetailsContract.View>(), 
 
         setHasOptionsMenu(true)
 
+        binding.fab.setOnClickListener {
+            presenter.onSetFavoriteSelected()
+        }
+
         return binding.root
     }
 
