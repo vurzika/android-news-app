@@ -1,14 +1,18 @@
 package com.onramp.vurzika.newsapp.repository
 
+import com.onramp.vurzika.newsapp.repository.database.NewsArticlesDatabase
 import com.onramp.vurzika.newsapp.repository.models.NewsArticle
-import com.onramp.vurzika.newsapp.repository.services.SpaceFlightNewsApi
 import com.onramp.vurzika.newsapp.repository.services.SpaceFlightNewsApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
-object NewsRepository {
-
-    private val newsService: SpaceFlightNewsApiService by lazy { SpaceFlightNewsApi.service }
+@Singleton
+class NewsRepository @Inject constructor(
+        private val database: NewsArticlesDatabase,
+        private val newsService: SpaceFlightNewsApiService
+) {
 
     suspend fun getNewsArticles() = withContext(Dispatchers.IO) {
         newsService.getNewsArticles().map {

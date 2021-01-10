@@ -17,13 +17,20 @@ import com.onramp.vurzika.newsapp.ui.base.BaseNavigationFragment
 import com.onramp.vurzika.newsapp.ui.base.mvp.BaseContract
 import com.onramp.vurzika.newsapp.ui.newslist.NewsListContract
 import com.onramp.vurzika.newsapp.ui.newslist.presenter.NewsListPresenter
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class NewsListFragment : BaseNavigationFragment<NewsListContract.View>(), NewsListContract.View {
 
     private lateinit var binding: FragmentNewsListBinding
     private lateinit var adapter: NewsArticlesListAdapter
 
+    @Inject
+    lateinit var presenter: NewsListPresenter
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        super.onCreateView(inflater, container, savedInstanceState);
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_news_list, container, false)
 
@@ -43,10 +50,10 @@ class NewsListFragment : BaseNavigationFragment<NewsListContract.View>(), NewsLi
         return binding.root
     }
 
-    // MVP
+    // View
 
-    override fun createPresenter(): BaseContract.Presenter<NewsListContract.View> {
-        return NewsListPresenter()
+    override fun getPresenter(): BaseContract.Presenter<NewsListContract.View> {
+        return presenter
     }
 
     override fun showLoadingIndicator(visible: Boolean) {

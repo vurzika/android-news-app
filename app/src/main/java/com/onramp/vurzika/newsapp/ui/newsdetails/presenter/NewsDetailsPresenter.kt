@@ -5,17 +5,23 @@ import com.onramp.vurzika.newsapp.repository.models.NewsArticle
 import com.onramp.vurzika.newsapp.ui.base.mvp.BasePresenter
 import com.onramp.vurzika.newsapp.ui.newsdetails.NewsDetailsContract
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class NewsDetailsPresenter(private val newsArticleId: String) : BasePresenter<NewsDetailsContract.View>(), NewsDetailsContract.Presenter {
+class NewsDetailsPresenter @Inject constructor() : BasePresenter<NewsDetailsContract.View>(), NewsDetailsContract.Presenter {
 
     private lateinit var newsArticle: NewsArticle
+
+    lateinit var newsArticleId: String
+
+    @Inject
+    lateinit var newsRepository: NewsRepository
 
     override fun onViewCreated() {
         launch {
             view?.showLoadingIndicator(true)
 
             try {
-                newsArticle = NewsRepository.getNewsArticle(newsArticleId)
+                newsArticle = newsRepository.getNewsArticle(newsArticleId)
 
                 view?.showArticle(newsArticle)
             } catch (error: Exception) {
