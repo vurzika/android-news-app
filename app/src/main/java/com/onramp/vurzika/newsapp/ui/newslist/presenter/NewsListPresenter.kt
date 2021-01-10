@@ -11,16 +11,46 @@ class NewsListPresenter @Inject constructor() : BasePresenter<NewsListContract.V
     @Inject
     lateinit var newsRepository: NewsRepository
 
+    private var shouldShowLiveNews = true
+
     override fun onViewCreated() {
-        loadNews()
+        view?.switchToHeadlinesSection()
+
+        if (shouldShowLiveNews) {
+            onHeadlinesSectionSelected()
+        } else {
+            onFavoritesSectionSelected()
+        }
     }
 
-    override fun loadNews() {
+    override fun onHeadlinesSectionSelected() {
+        view?.switchToHeadlinesSection()
+
+        shouldShowLiveNews = true
+
+        loadNews();
+    }
+
+    override fun onFavoritesSectionSelected() {
+        view?.switchToFavoritesSection();
+
+        shouldShowLiveNews = false
+
+        loadNews();
+    }
+
+    private fun loadNews() {
         launch {
             view?.showLoadingIndicator(true)
 
             try {
-                view?.showNews(newsRepository.getNewsArticles())
+                val newsArticles = if (shouldShowLiveNews) {
+                    newsRepository.getNewsArticles()
+                } else {
+                    newsRepository.getSavedNewsArticles()
+                }
+
+                view?.showNews(newsArticles)
             } catch (error: Exception) {
                 view?.showError(error.message ?: "Unknown error")
             } finally {

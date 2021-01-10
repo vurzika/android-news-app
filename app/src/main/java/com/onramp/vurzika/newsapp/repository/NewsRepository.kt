@@ -49,4 +49,10 @@ class NewsRepository @Inject constructor(
     suspend fun saveNewsArticle(newsArticle: NewsArticle) = withContext(Dispatchers.IO) {
         database.newsArticlesDao().saveNewsArticle(newsArticle)
     }
+
+    suspend fun getSavedNewsArticles(): List<NewsArticle> = withContext(Dispatchers.IO) {
+        database.newsArticlesDao().getNewsArticles().onEach {
+            it.isStored = true
+        }
+    }
 }
