@@ -20,6 +20,9 @@ buildscript {
 
         // SafeArgs
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$version_navigation"
+
+        // DI
+        classpath 'com.google.dagger:hilt-android-gradle-plugin:2.28-alpha'
     }
 }
 

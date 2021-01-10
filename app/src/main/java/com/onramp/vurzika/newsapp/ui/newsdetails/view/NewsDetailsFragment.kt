@@ -17,26 +17,39 @@ import com.onramp.vurzika.newsapp.ui.base.BaseNavigationFragment
 import com.onramp.vurzika.newsapp.ui.base.mvp.BaseContract
 import com.onramp.vurzika.newsapp.ui.newsdetails.NewsDetailsContract
 import com.onramp.vurzika.newsapp.ui.newsdetails.presenter.NewsDetailsPresenter
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class NewsDetailsFragment : BaseNavigationFragment<NewsDetailsContract.View>(), NewsDetailsContract.View {
 
     private lateinit var binding: FragmentNewsDetailsBinding
 
+    @Inject
+    lateinit var presenter: NewsDetailsPresenter
+
     private val args: NewsDetailsFragmentArgs by navArgs()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        super.onCreateView(inflater, container, savedInstanceState)
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_news_details, container, false)
 
+        presenter.newsArticleId = args.newsArticleId
+
         setHasOptionsMenu(true)
+
+        binding.fab.setOnClickListener {
+            presenter.onSetFavoriteSelected()
+        }
 
         return binding.root
     }
 
     // MVP
 
-    override fun createPresenter(): BaseContract.Presenter<NewsDetailsContract.View> {
-        return NewsDetailsPresenter(args.newsArticleId)
+    override fun getPresenter(): BaseContract.Presenter<NewsDetailsContract.View> {
+        return presenter
     }
 
     override fun showLoadingIndicator(visible: Boolean) {

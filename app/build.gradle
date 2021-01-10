@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
 
 // SafeArgs
 apply plugin: 'androidx.navigation.safeargs.kotlin'
@@ -17,6 +18,14 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += [
+                        "room.incremental":"true"
+                ]
+            }
+        }
     }
     buildTypes {
         release {
@@ -60,10 +69,19 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.2'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.2'
 
+    // DI
+    implementation "com.google.dagger:hilt-android:2.28-alpha"
+    kapt "com.google.dagger:hilt-android-compiler:2.28-alpha"
+
     // API integration: Retrofit + Jackson
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation "com.squareup.retrofit2:converter-jackson:2.9.0"
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.12.0"
+
+    // Room
+    implementation "androidx.room:room-runtime:2.2.6"
+    kapt "androidx.room:room-compiler:2.2.6"
+    implementation "androidx.room:room-ktx:2.2.6"
 }
 repositories {
     maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }

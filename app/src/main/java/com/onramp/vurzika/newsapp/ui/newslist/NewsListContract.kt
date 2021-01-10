@@ -12,11 +12,17 @@ interface NewsListContract {
         fun showNews(newsArticles: List<NewsArticle>)
 
         fun showError(errorMessage: String)
+
+        fun switchToHeadlinesSection()
+
+        fun switchToFavoritesSection()
     }
 
     interface Presenter : BaseContract.Presenter<View> {
 
-        fun loadNews()
+        fun onHeadlinesSectionSelected()
+
+        fun onFavoritesSectionSelected()
 
     }
 }
