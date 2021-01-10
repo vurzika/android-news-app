@@ -32,7 +32,7 @@ class NewsListFragment : BaseNavigationFragment<NewsListContract.View>(), NewsLi
     private var shouldHandleBottomNavigationEvents = true
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        super.onCreateView(inflater, container, savedInstanceState);
+        super.onCreateView(inflater, container, savedInstanceState)
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_news_list, container, false)
 

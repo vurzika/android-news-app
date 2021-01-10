@@ -19,7 +19,7 @@ interface NewsArticlesDao {
     suspend fun saveNewsArticle(newsArticle: NewsArticle)
 
     @Query("DELETE FROM news_articles")
-    suspend fun deleteAll();
+    suspend fun deleteAll()
 
     @Query("DELETE FROM news_articles WHERE id = :newsArticleId")
     suspend fun delete(newsArticleId: String)

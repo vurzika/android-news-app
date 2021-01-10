@@ -28,15 +28,15 @@ class NewsListPresenter @Inject constructor() : BasePresenter<NewsListContract.V
 
         shouldShowLiveNews = true
 
-        loadNews();
+        loadNews()
     }
 
     override fun onFavoritesSectionSelected() {
-        view?.switchToFavoritesSection();
+        view?.switchToFavoritesSection()
 
         shouldShowLiveNews = false
 
-        loadNews();
+        loadNews()
     }
 
     private fun loadNews() {
