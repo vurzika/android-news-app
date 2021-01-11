@@ -14,4 +14,10 @@
     <!-- News Details: Menu -->
     <string name="action_open_with">Open With …</string>
     <string name="action_copy_link">Copy Link</string>
+
+    <!-- Error messages -->
+    <string name="message_favorites_empty">No saved news stories yet. Use ★️ to add new news articles to this section</string>
+    <string name="message_favorites_empty_icon">🧐</string>
+    <string name="message_error_default">Oops. Something wrong has happened. Please try again later</string>
+    <string name="message_info_offline">Looks like you are currently offline. Please try again later or use favorites section</string>
 </resources>

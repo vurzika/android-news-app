@@ -68,37 +68,63 @@ class NewsListFragment : BaseNavigationFragment<NewsListContract.View>(), NewsLi
 
         binding.newsList.adapter = adapter
 
+        binding.newsSwipeRefreshLayout.setOnRefreshListener {
+            presenter.onRefreshRequested()
+        }
+
         return binding.root
     }
 
     // View
 
+    private fun hideAllUiElements() {
+        binding.newsSwipeRefreshLayout.visibility = View.GONE
+        binding.viewErrorMessage.visibility = View.GONE
+        binding.viewNoFavorites.visibility = View.GONE
+        binding.viewOfflineMode.visibility = View.GONE
+        binding.newsSwipeRefreshLayout.isRefreshing = false
+    }
+
     override fun getPresenter(): BaseContract.Presenter<NewsListContract.View> {
         return presenter
     }
 
-    override fun showLoadingIndicator(visible: Boolean) {
-        binding.emptyView.visibility = View.GONE
+    override fun showLoading() {
+        hideAllUiElements()
+
+
         binding.newsSwipeRefreshLayout.visibility = View.VISIBLE
 
         // force SwipeRefreshLayout displaying loading indicator
         binding.newsSwipeRefreshLayout.post {
-            binding.newsSwipeRefreshLayout.isRefreshing = visible
+            binding.newsSwipeRefreshLayout.isRefreshing = true
         }
     }
 
     override fun showNews(newsArticles: List<NewsArticle>) {
-        binding.emptyView.visibility = View.GONE
+        hideAllUiElements()
+
         binding.newsSwipeRefreshLayout.visibility = View.VISIBLE
 
         adapter.submitList(newsArticles)
     }
 
-    override fun showError(errorMessage: String) {
-        binding.newsSwipeRefreshLayout.visibility = View.GONE
-        binding.emptyView.visibility = View.VISIBLE
+    override fun showError(errorMessage: String?) {
+        hideAllUiElements()
 
-        binding.emptyView.text = errorMessage
+        binding.viewErrorMessage.visibility = View.VISIBLE
+    }
+
+    override fun showMessageAppOffline() {
+        hideAllUiElements()
+
+        binding.viewOfflineMode.visibility = View.VISIBLE
+    }
+
+    override fun showMessageEmptyFavorites() {
+        hideAllUiElements()
+
+        binding.viewNoFavorites.visibility = View.VISIBLE
     }
 
     override fun switchToHeadlinesSection() {

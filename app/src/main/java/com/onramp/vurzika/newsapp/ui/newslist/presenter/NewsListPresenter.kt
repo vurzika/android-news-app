@@ -4,58 +4,72 @@ import com.onramp.vurzika.newsapp.repository.NewsRepository
 import com.onramp.vurzika.newsapp.ui.base.mvp.BasePresenter
 import com.onramp.vurzika.newsapp.ui.newslist.NewsListContract
 import kotlinx.coroutines.launch
+import java.io.IOException
 import javax.inject.Inject
 
 class NewsListPresenter @Inject constructor() : BasePresenter<NewsListContract.View>(), NewsListContract.Presenter {
 
+    enum class SelectedSection {
+        NEWS, FAVORITES
+    }
+
     @Inject
     lateinit var newsRepository: NewsRepository
 
-    private var shouldShowLiveNews = true
+    private var selectedSection = SelectedSection.NEWS
 
     override fun onViewCreated() {
-        view?.switchToHeadlinesSection()
-
-        if (shouldShowLiveNews) {
-            onHeadlinesSectionSelected()
-        } else {
-            onFavoritesSectionSelected()
-        }
+        refreshSelectedSection()
     }
 
     override fun onHeadlinesSectionSelected() {
         view?.switchToHeadlinesSection()
 
-        shouldShowLiveNews = true
+        selectedSection = SelectedSection.NEWS
 
-        loadNews()
+        launch {
+            view?.showLoading()
+
+            try {
+                view?.showNews(newsRepository.getNewsArticles())
+            } catch (error: IOException) {
+                view?.showMessageAppOffline()
+            } catch (error: Exception) {
+                view?.showError(error.message)
+            }
+        }
     }
 
     override fun onFavoritesSectionSelected() {
         view?.switchToFavoritesSection()
 
-        shouldShowLiveNews = false
+        selectedSection = SelectedSection.FAVORITES
 
-        loadNews()
-    }
-
-    private fun loadNews() {
         launch {
-            view?.showLoadingIndicator(true)
+            view?.showLoading()
 
             try {
-                val newsArticles = if (shouldShowLiveNews) {
-                    newsRepository.getNewsArticles()
-                } else {
-                    newsRepository.getSavedNewsArticles()
-                }
+                val newsArticles = newsRepository.getSavedNewsArticles()
 
-                view?.showNews(newsArticles)
+                if (newsArticles.isNotEmpty()) {
+                    view?.showNews(newsArticles)
+                } else {
+                    view?.showMessageEmptyFavorites()
+                }
             } catch (error: Exception) {
-                view?.showError(error.message ?: "Unknown error")
-            } finally {
-                view?.showLoadingIndicator(false)
+                view?.showError(error.message)
             }
+        }
+    }
+
+    override fun onRefreshRequested() {
+        refreshSelectedSection()
+    }
+
+    private fun refreshSelectedSection() {
+        when (selectedSection) {
+            SelectedSection.NEWS -> onHeadlinesSectionSelected()
+            SelectedSection.FAVORITES -> onFavoritesSectionSelected()
         }
     }
 }

@@ -28,17 +28,21 @@ class NewsRepository @Inject constructor(
     }
 
     suspend fun getNewsArticle(newsArticleId: String) = withContext(Dispatchers.IO) {
-        newsService.getArticle(newsArticleId).let {
-            NewsArticle(
-                    id = newsArticleId,
-                    title = it.title,
-                    summary = it.summary ?: "Article Summary Not Available",
-                    newsSite = it.newsSite ?: "Unknown Source",
-                    publicationDate = it.publishedAt,
-                    thumbnailUrl = it.imageUrl
-            )
-        }.also {
-            it.isStored = database.newsArticlesDao().checkIfExists(newsArticleId)
+        if (database.newsArticlesDao().checkIfExists(newsArticleId)) {
+            database.newsArticlesDao().getNewsArticle(newsArticleId).also {
+                it.isStored = true
+            }
+        } else {
+            newsService.getArticle(newsArticleId).let {
+                NewsArticle(
+                        id = newsArticleId,
+                        title = it.title,
+                        summary = it.summary ?: "Article Summary Not Available",
+                        newsSite = it.newsSite ?: "Unknown Source",
+                        publicationDate = it.publishedAt,
+                        thumbnailUrl = it.imageUrl
+                )
+            }
         }
     }
 

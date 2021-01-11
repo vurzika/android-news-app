@@ -7,11 +7,15 @@ interface NewsListContract {
 
     interface View : BaseContract.View {
 
-        fun showLoadingIndicator(visible: Boolean)
+        fun showLoading()
 
         fun showNews(newsArticles: List<NewsArticle>)
 
-        fun showError(errorMessage: String)
+        fun showError(errorMessage: String?)
+
+        fun showMessageAppOffline()
+
+        fun showMessageEmptyFavorites()
 
         fun switchToHeadlinesSection()
 
@@ -23,6 +27,8 @@ interface NewsListContract {
         fun onHeadlinesSectionSelected()
 
         fun onFavoritesSectionSelected()
+
+        fun onRefreshRequested()
 
     }
 }

@@ -42,13 +42,17 @@
 
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-            <!-- Empty view is only visible when the list has no items. -->
-            <TextView
-                android:id="@+id/empty_view"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:visibility="gone" />
+            <include
+                android:id="@+id/view_error_message"
+                layout="@layout/view_message_error" />
+
+            <include
+                android:id="@+id/view_offline_mode"
+                layout="@layout/view_message_offline" />
+
+            <include
+                android:id="@+id/view_no_favorites"
+                layout="@layout/view_message_no_favorites" />
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
