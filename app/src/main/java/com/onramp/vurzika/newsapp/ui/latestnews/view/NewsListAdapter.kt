@@ -1,4 +1,4 @@
-package com.onramp.vurzika.newsapp.ui.newslist.view
+package com.onramp.vurzika.newsapp.ui.latestnews.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

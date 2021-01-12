@@ -14,7 +14,7 @@
 
         <variable
             name="clickListener"
-            type="com.onramp.vurzika.newsapp.ui.newslist.view.NewsArticleClickListener" />
+            type="com.onramp.vurzika.newsapp.ui.latestnews.view.NewsArticleClickListener" />
 
     </data>
 

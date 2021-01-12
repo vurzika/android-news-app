@@ -1,4 +1,4 @@
-package com.onramp.vurzika.newsapp.ui.newslist.view
+package com.onramp.vurzika.newsapp.ui.latestnews.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,30 +11,28 @@ import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import com.onramp.vurzika.newsapp.R
-import com.onramp.vurzika.newsapp.databinding.FragmentNewsListBinding
+import com.onramp.vurzika.newsapp.databinding.FragmentLatestNewsBinding
 import com.onramp.vurzika.newsapp.repository.models.NewsArticle
 import com.onramp.vurzika.newsapp.ui.base.BaseNavigationFragment
 import com.onramp.vurzika.newsapp.ui.base.mvp.BaseContract
-import com.onramp.vurzika.newsapp.ui.newslist.NewsListContract
-import com.onramp.vurzika.newsapp.ui.newslist.presenter.NewsListPresenter
+import com.onramp.vurzika.newsapp.ui.latestnews.LatestNewsContract
+import com.onramp.vurzika.newsapp.ui.latestnews.presenter.LatestNewsPresenter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class NewsListFragment : BaseNavigationFragment<NewsListContract.View>(), NewsListContract.View {
+class LatestNewsFragment : BaseNavigationFragment<LatestNewsContract.View>(), LatestNewsContract.View {
 
-    private lateinit var binding: FragmentNewsListBinding
+    private lateinit var binding: FragmentLatestNewsBinding
     private lateinit var adapter: NewsArticlesListAdapter
 
     @Inject
-    lateinit var presenter: NewsListPresenter
-
-    private var shouldHandleBottomNavigationEvents = true
+    lateinit var presenter: LatestNewsPresenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         super.onCreateView(inflater, container, savedInstanceState)
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_news_list, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_latest_news, container, false)
 
         setHasOptionsMenu(true)
 
@@ -42,29 +40,10 @@ class NewsListFragment : BaseNavigationFragment<NewsListContract.View>(), NewsLi
                 NewsArticleClickListener(
                         clickListener = { itemId ->
                             findNavController().navigate(
-                                    NewsListFragmentDirections.actionNewsListFragmentToDetailsFragment(itemId)
+                                    LatestNewsFragmentDirections.actionLatestNewsFragmentToDetailsFragment(itemId)
                             )
                         })
         )
-
-        binding.bottomNavigation.setOnNavigationItemSelectedListener { item ->
-            if (!shouldHandleBottomNavigationEvents) {
-                return@setOnNavigationItemSelectedListener false
-            }
-
-            when (item.itemId) {
-                R.id.headlines -> {
-                    presenter.onHeadlinesSectionSelected()
-                    true
-                }
-                R.id.favorites -> {
-                    presenter.onFavoritesSectionSelected()
-                    // Respond to navigation item 2 click
-                    true
-                }
-                else -> false
-            }
-        }
 
         binding.newsList.adapter = adapter
 
@@ -80,18 +59,16 @@ class NewsListFragment : BaseNavigationFragment<NewsListContract.View>(), NewsLi
     private fun hideAllUiElements() {
         binding.newsSwipeRefreshLayout.visibility = View.GONE
         binding.viewErrorMessage.visibility = View.GONE
-        binding.viewNoFavorites.visibility = View.GONE
         binding.viewOfflineMode.visibility = View.GONE
         binding.newsSwipeRefreshLayout.isRefreshing = false
     }
 
-    override fun getPresenter(): BaseContract.Presenter<NewsListContract.View> {
+    override fun getPresenter(): BaseContract.Presenter<LatestNewsContract.View> {
         return presenter
     }
 
     override fun showLoading() {
         hideAllUiElements()
-
 
         binding.newsSwipeRefreshLayout.visibility = View.VISIBLE
 
@@ -121,25 +98,6 @@ class NewsListFragment : BaseNavigationFragment<NewsListContract.View>(), NewsLi
         binding.viewOfflineMode.visibility = View.VISIBLE
     }
 
-    override fun showMessageEmptyFavorites() {
-        hideAllUiElements()
-
-        binding.viewNoFavorites.visibility = View.VISIBLE
-    }
-
-    override fun switchToHeadlinesSection() {
-        shouldHandleBottomNavigationEvents = false
-        binding.bottomNavigation.selectedItemId = R.id.headlines
-        shouldHandleBottomNavigationEvents = true
-
-    }
-
-    override fun switchToFavoritesSection() {
-        shouldHandleBottomNavigationEvents = false
-        binding.bottomNavigation.selectedItemId = R.id.favorites
-        shouldHandleBottomNavigationEvents = true
-    }
-
     // Options Menu
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -153,7 +111,7 @@ class NewsListFragment : BaseNavigationFragment<NewsListContract.View>(), NewsLi
         return when (item.itemId) {
             R.id.action_settings -> {
                 // handle navigation manually as we are navigating to different activity
-                findNavController().navigate(NewsListFragmentDirections.actionNewsListFragmentToSettingsActivity())
+                findNavController().navigate(LatestNewsFragmentDirections.actionLatestNewsFragmentToSettingsActivity())
                 true
             }
             else -> super.onOptionsItemSelected(item)

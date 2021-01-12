@@ -1,23 +1,32 @@
 <resources>
     <string name="app_name">News App</string>
 
+    <!-- Fragment: Online News -->
+    <string name="title_latest_news">Latest News</string>
+
+    <string name="message_error_default">Oops. Something wrong has happened. Please try again later</string>
+    <string name="message_info_offline">Looks like you are currently offline. Please try again later or use favorites section</string>
+
+    <!-- News List: Menu -->
+    <string name="action_settings">Settings</string>
+
+    <!-- Fragment: Offline News -->
+    <string name="title_offline_news">Offline News</string>
+
+    <string name="message_favorites_empty">No saved news stories yet. Use ★️ to add new news articles to this section</string>
+    <string name="message_favorites_empty_icon">🧐</string>
+
+    <!-- Fragment: News Details -->
+    <string name="title_news_details">News Details</string>
+
+    <!-- News Details: Menu -->
+    <string name="action_open_with">Open With …</string>
+    <string name="action_copy_link">Copy Link</string>
+
     <!-- Activity: Settings -->
     <string name="title_activity_settings">Application Settings</string>
     <string name="settings_header_news_list">News List</string>
     <string name="settings_show_thumbnails">Show Thumbnails in the News List</string>
     <string name="headlines">Headlines</string>
     <string name="favorites">Favorites</string>
-
-    <!-- News List: Menu -->
-    <string name="action_settings">Settings</string>
-
-    <!-- News Details: Menu -->
-    <string name="action_open_with">Open With …</string>
-    <string name="action_copy_link">Copy Link</string>
-
-    <!-- Error messages -->
-    <string name="message_favorites_empty">No saved news stories yet. Use ★️ to add new news articles to this section</string>
-    <string name="message_favorites_empty_icon">🧐</string>
-    <string name="message_error_default">Oops. Something wrong has happened. Please try again later</string>
-    <string name="message_info_offline">Looks like you are currently offline. Please try again later or use favorites section</string>
 </resources>

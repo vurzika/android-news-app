@@ -1,9 +1,9 @@
-package com.onramp.vurzika.newsapp.ui.newslist
+package com.onramp.vurzika.newsapp.ui.latestnews
 
 import com.onramp.vurzika.newsapp.repository.models.NewsArticle
 import com.onramp.vurzika.newsapp.ui.base.mvp.BaseContract
 
-interface NewsListContract {
+interface LatestNewsContract {
 
     interface View : BaseContract.View {
 
@@ -14,19 +14,9 @@ interface NewsListContract {
         fun showError(errorMessage: String?)
 
         fun showMessageAppOffline()
-
-        fun showMessageEmptyFavorites()
-
-        fun switchToHeadlinesSection()
-
-        fun switchToFavoritesSection()
     }
 
     interface Presenter : BaseContract.Presenter<View> {
-
-        fun onHeadlinesSectionSelected()
-
-        fun onFavoritesSectionSelected()
 
         fun onRefreshRequested()
 

@@ -2,13 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/headlines"
+        android:id="@+id/latestNewsFragment"
         android:enabled="true"
         android:icon="@drawable/ic_headlines"
         android:title="@string/headlines" />
 
     <item
-        android:id="@+id/favorites"
+        android:id="@+id/offlineNewsFragment"
         android:enabled="true"
         android:icon="@drawable/ic_favorites"
         android:title="@string/favorites" />

@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.onramp.vurzika.newsapp.R
 import com.onramp.vurzika.newsapp.ui.base.mvp.BaseContract
 import com.onramp.vurzika.newsapp.ui.base.mvp.BaseFragment
 
@@ -28,7 +29,7 @@ abstract class BaseNavigationFragment<T : BaseContract.View> : BaseFragment<T>()
 
         // connect fragment's toolbar to navigation graph
         val navController = findNavController()
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
+        val appBarConfiguration = AppBarConfiguration(setOf(R.id.latestNewsFragment, R.id.offlineNewsFragment))
 
         getToolbar()
                 .setupWithNavController(navController, appBarConfiguration)

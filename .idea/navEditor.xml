@@ -8,19 +8,7 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
-                  <entry key="newsDetailsFragment">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="108" />
-                            <option name="y" value="25" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
-                  <entry key="newsListFragment">
+                  <entry key="latestNewsFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
@@ -31,12 +19,50 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_newsListFragment_to_detailsFragment">
+                            <entry key="action_latestNewsFragment_to_detailsFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_newsListFragment_to_settingsActivity">
+                            <entry key="action_latestNewsFragment_to_settingsActivity">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="newsDetailsFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="310" />
+                            <option name="y" value="199" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="offlineNewsFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-126" />
+                            <option name="y" value="373" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_offlineNewsFragment_to_newsDetailsFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_offlineNewsFragment_to_settingsActivity">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -51,8 +77,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-124" />
-                            <option name="y" value="349" />
+                            <option name="x" value="76" />
+                            <option name="y" value="646" />
                           </Point>
                         </option>
                       </LayoutPositions>

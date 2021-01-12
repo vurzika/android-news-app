@@ -2,23 +2,34 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/navigation"
-    app:startDestination="@id/newsListFragment">
+    app:startDestination="@id/latestNewsFragment">
 
     <fragment
-        android:id="@+id/newsListFragment"
-        android:name="com.onramp.vurzika.newsapp.ui.newslist.view.NewsListFragment"
-        android:label="@string/app_name">
+        android:id="@+id/latestNewsFragment"
+        android:name="com.onramp.vurzika.newsapp.ui.latestnews.view.LatestNewsFragment"
+        android:label="@string/title_latest_news">
         <action
-            android:id="@+id/action_newsListFragment_to_detailsFragment"
+            android:id="@+id/action_latestNewsFragment_to_detailsFragment"
             app:destination="@id/newsDetailsFragment" />
         <action
-            android:id="@+id/action_newsListFragment_to_settingsActivity"
+            android:id="@+id/action_latestNewsFragment_to_settingsActivity"
+            app:destination="@id/settingsActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/offlineNewsFragment"
+        android:name="com.onramp.vurzika.newsapp.ui.offlinenews.view.OfflineNewsFragment"
+        android:label="@string/title_offline_news">
+        <action
+            android:id="@+id/action_offlineNewsFragment_to_newsDetailsFragment"
+            app:destination="@id/newsDetailsFragment" />
+        <action
+            android:id="@+id/action_offlineNewsFragment_to_settingsActivity"
             app:destination="@id/settingsActivity" />
     </fragment>
     <fragment
         android:id="@+id/newsDetailsFragment"
         android:name="com.onramp.vurzika.newsapp.ui.newsdetails.view.NewsDetailsFragment"
-        android:label="Details Fragment">
+        android:label="@string/title_news_details">
         <argument
             android:name="newsArticleId"
             app:argType="string" />
