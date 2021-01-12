@@ -1,16 +1,29 @@
 package com.onramp.vurzika.newsapp.ui.latestnews.view
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.onramp.vurzika.newsapp.R
 import com.onramp.vurzika.newsapp.databinding.NewsListItemBinding
 import com.onramp.vurzika.newsapp.repository.models.NewsArticle
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
-class NewsArticlesListAdapter(private val clickListener: NewsArticleClickListener) :
+class NewsArticlesListAdapter @Inject constructor() :
         ListAdapter<NewsArticle, NewsArticlesListAdapter.ViewHolder>(NewsArticleDiffCallback()) {
 
+    @Inject
+    lateinit var userSettings: SharedPreferences
+
+    @Inject
+    @ApplicationContext
+    lateinit var context: Context
+
+    lateinit var onItemClickListener: NewsArticleClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
@@ -18,15 +31,20 @@ class NewsArticlesListAdapter(private val clickListener: NewsArticleClickListene
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val item = getItem(position)
-        viewHolder.bind(item, clickListener)
+
+        val isThumbnailEnabled =
+                userSettings.getBoolean(context.getString(R.string.setting_key_show_thumbnails), true)
+
+        viewHolder.bind(item, isThumbnailEnabled, onItemClickListener)
     }
 
     class ViewHolder(private val binding: NewsListItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         private var newsArticleId: String = ""
 
-        fun bind(item: NewsArticle, clickListener: NewsArticleClickListener) {
+        fun bind(item: NewsArticle, isThumbnailEnabled: Boolean, clickListener: NewsArticleClickListener) {
             newsArticleId = item.id
+            binding.isThumbnailEnabled = isThumbnailEnabled
             binding.newsArticle = item
             binding.clickListener = clickListener
         }

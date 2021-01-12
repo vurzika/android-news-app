@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="setting_background_refresh_internal_entries">
+        <item>"Disabled"</item>
+        <item>"Once per minute (testing mode)"</item>
+        <item>"1 Hour"</item>
+        <item>"4 Hours"</item>
+        <item>"12 Hours"</item>
+        <item>"One per day"</item>
+    </string-array>
+    <string-array name="setting_background_refresh_internal_values">
+        <item>0</item>
+        <item>1</item>
+        <item>60</item>
+        <item>240</item>
+        <item>720</item>
+        <item>1440</item>
+    </string-array>
+</resources>

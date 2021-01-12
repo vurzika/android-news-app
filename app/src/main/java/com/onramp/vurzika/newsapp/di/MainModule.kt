@@ -1,6 +1,8 @@
 package com.onramp.vurzika.newsapp.di
 
 import android.content.Context
+import android.content.SharedPreferences
+import androidx.preference.PreferenceManager
 import androidx.room.Room
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.onramp.vurzika.newsapp.repository.database.NewsArticlesDatabase
@@ -13,6 +15,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
 import javax.inject.Singleton
+
 
 @Module
 @InstallIn(ApplicationComponent::class)
@@ -37,5 +40,11 @@ object MainModule {
                 .build()
 
         return retrofit.create(SpaceFlightNewsApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun providePreferences(@ApplicationContext context: Context): SharedPreferences {
+        return PreferenceManager.getDefaultSharedPreferences(context)
     }
 }

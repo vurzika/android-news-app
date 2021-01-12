@@ -26,7 +26,9 @@ import javax.inject.Inject
 class OfflineNewsFragment : BaseNavigationFragment<OfflineNewsContract.View>(), OfflineNewsContract.View {
 
     private lateinit var binding: FragmentOfflineNewsBinding
-    private lateinit var adapter: NewsArticlesListAdapter
+
+    @Inject
+    lateinit var adapter: NewsArticlesListAdapter
 
     @Inject
     lateinit var presenter: OfflineNewsPresenter
@@ -38,18 +40,22 @@ class OfflineNewsFragment : BaseNavigationFragment<OfflineNewsContract.View>(), 
 
         setHasOptionsMenu(true)
 
-        adapter = NewsArticlesListAdapter(
-                NewsArticleClickListener(
-                        clickListener = { itemId ->
-                            findNavController().navigate(
-                                    OfflineNewsFragmentDirections.actionOfflineNewsFragmentToNewsDetailsFragment(itemId)
-                            )
-                        })
-        )
+        adapter.onItemClickListener = NewsArticleClickListener { itemId ->
+            findNavController().navigate(
+                    OfflineNewsFragmentDirections.actionOfflineNewsFragmentToNewsDetailsFragment(itemId)
+            )
+        }
 
         binding.newsList.adapter = adapter
 
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // refresh list UI on resume
+        adapter.notifyDataSetChanged()
     }
 
     // View

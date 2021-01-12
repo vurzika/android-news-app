@@ -24,7 +24,9 @@ import javax.inject.Inject
 class LatestNewsFragment : BaseNavigationFragment<LatestNewsContract.View>(), LatestNewsContract.View {
 
     private lateinit var binding: FragmentLatestNewsBinding
-    private lateinit var adapter: NewsArticlesListAdapter
+
+    @Inject
+    lateinit var adapter: NewsArticlesListAdapter
 
     @Inject
     lateinit var presenter: LatestNewsPresenter
@@ -36,14 +38,11 @@ class LatestNewsFragment : BaseNavigationFragment<LatestNewsContract.View>(), La
 
         setHasOptionsMenu(true)
 
-        adapter = NewsArticlesListAdapter(
-                NewsArticleClickListener(
-                        clickListener = { itemId ->
-                            findNavController().navigate(
-                                    LatestNewsFragmentDirections.actionLatestNewsFragmentToDetailsFragment(itemId)
-                            )
-                        })
-        )
+        adapter.onItemClickListener = NewsArticleClickListener { itemId ->
+            findNavController().navigate(
+                    LatestNewsFragmentDirections.actionLatestNewsFragmentToDetailsFragment(itemId)
+            )
+        }
 
         binding.newsList.adapter = adapter
 
@@ -52,6 +51,13 @@ class LatestNewsFragment : BaseNavigationFragment<LatestNewsContract.View>(), La
         }
 
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // refresh list UI on resume
+        adapter.notifyDataSetChanged()
     }
 
     // View
