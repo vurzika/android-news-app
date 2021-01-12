@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">News App</string>
 
+    <string name="headlines">Headlines</string>
+    <string name="favorites">Favorites</string>
+
     <!-- Fragment: Online News -->
     <string name="title_latest_news">Latest News</string>
 
@@ -25,8 +28,15 @@
 
     <!-- Activity: Settings -->
     <string name="title_activity_settings">Application Settings</string>
-    <string name="settings_header_news_list">News List</string>
-    <string name="settings_show_thumbnails">Show Thumbnails in the News List</string>
-    <string name="headlines">Headlines</string>
-    <string name="favorites">Favorites</string>
+
+    <string name="settings_section_header_display">Display Settings</string>
+    <string name="settings_show_thumbnails">Show Thumbnails</string>
+    <string name="setting_show_thumbnails_summary">Automatically download and display news thumbnails when viewing latest news</string>
+    <string name="setting_key_show_thumbnails">setting_key_show_thumbnails</string>
+
+    <string name="settings_section_background_refresh">Automatic Refresh</string>
+    <string name="setting_key_background_refresh_interval">setting_key_background_refresh_interval</string>
+    <string name="setting_background_refresh_interval">Refresh Interval</string>
+    <string name="setting_background_refresh_internal_dialog_title">Select Refresh Interval</string>
+
 </resources>

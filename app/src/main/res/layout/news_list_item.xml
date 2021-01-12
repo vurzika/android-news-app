@@ -16,6 +16,10 @@
             name="clickListener"
             type="com.onramp.vurzika.newsapp.ui.latestnews.view.NewsArticleClickListener" />
 
+        <variable
+            name="isThumbnailEnabled"
+            type="Boolean" />
+
     </data>
 
     <FrameLayout
@@ -37,7 +41,7 @@
                 android:layout_height="@dimen/size_list_item_image_height"
                 android:layout_marginEnd="@dimen/padding_side_list_image_extra"
                 android:scaleType="centerCrop"
-                android:visibility="@{newsArticle.thumbnailUrl == null ? View.GONE : View.VISIBLE}"
+                android:visibility="@{(isThumbnailEnabled &amp;&amp; newsArticle.thumbnailUrl != null) ? View.VISIBLE : View.GONE}"
                 app:imageUrl="@{newsArticle.thumbnailUrl}"
                 tools:src="@tools:sample/avatars" />
 
@@ -90,7 +94,7 @@
             android:layout_height="1dp"
             android:layout_gravity="bottom"
             android:background="?android:attr/dividerVertical"
-            app:dividerOffset="@{newsArticle.thumbnailUrl == null ? @dimen/padding_components : @dimen/padding_divider_with_image}" />
+            app:dividerOffset="@{(isThumbnailEnabled &amp;&amp; newsArticle.thumbnailUrl != null) ? @dimen/padding_divider_with_image : @dimen/padding_components}" />
 
     </FrameLayout>
 
