@@ -36,6 +36,6 @@
     </fragment>
     <activity
         android:id="@+id/settingsActivity"
-        android:name="com.onramp.vurzika.newsapp.ui.settings.SettingsActivity"
+        android:name="com.onramp.vurzika.newsapp.ui.settings.view.SettingsActivity"
         android:label="SettingsActivity" />
 </navigation>

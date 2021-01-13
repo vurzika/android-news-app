@@ -1,11 +1,16 @@
-package com.onramp.vurzika.newsapp.ui.settings
+package com.onramp.vurzika.newsapp.ui.settings.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.preference.PreferenceFragmentCompat
 import com.onramp.vurzika.newsapp.R
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class SettingsActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var settingsFragment: SettingsFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -14,16 +19,11 @@ class SettingsActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager
                     .beginTransaction()
-                    .replace(R.id.settings, SettingsFragment())
+                    .replace(R.id.settings, settingsFragment)
                     .commit()
         }
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
 
-    class SettingsFragment : PreferenceFragmentCompat() {
-        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-            setPreferencesFromResource(R.xml.main_settings, rootKey)
-        }
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     // Up Button
