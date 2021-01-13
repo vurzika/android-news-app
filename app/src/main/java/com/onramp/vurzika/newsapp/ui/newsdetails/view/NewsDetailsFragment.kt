@@ -10,12 +10,12 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.snackbar.Snackbar
 import com.onramp.vurzika.newsapp.R
 import com.onramp.vurzika.newsapp.databinding.FragmentNewsDetailsBinding
 import com.onramp.vurzika.newsapp.repository.models.NewsArticle
@@ -92,7 +92,7 @@ class NewsDetailsFragment : BaseNavigationFragment<NewsDetailsContract.View>(), 
     }
 
     override fun notifyLinkCopiedToClipboard() {
-        Toast.makeText(context, getString(R.string.message_link_copied_to_clipboard), Toast.LENGTH_LONG).show()
+        Snackbar.make(requireView(), getString(R.string.message_link_copied_to_clipboard), Snackbar.LENGTH_LONG).show()
     }
 
     override fun openLinkWithExternalBrowser(pageUri: Uri) {

@@ -2,12 +2,14 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/navigation"
+    xmlns:tools="http://schemas.android.com/tools"
     app:startDestination="@id/latestNewsFragment">
 
     <fragment
         android:id="@+id/latestNewsFragment"
         android:name="com.onramp.vurzika.newsapp.ui.latestnews.view.LatestNewsFragment"
-        android:label="@string/title_latest_news">
+        android:label="@string/title_latest_news"
+        tools:layout="@layout/fragment_latest_news">
         <action
             android:id="@+id/action_latestNewsFragment_to_detailsFragment"
             app:destination="@id/newsDetailsFragment" />
@@ -18,7 +20,8 @@
     <fragment
         android:id="@+id/offlineNewsFragment"
         android:name="com.onramp.vurzika.newsapp.ui.offlinenews.view.OfflineNewsFragment"
-        android:label="@string/title_offline_news">
+        android:label="@string/title_offline_news"
+        tools:layout="@layout/fragment_offline_news">
         <action
             android:id="@+id/action_offlineNewsFragment_to_newsDetailsFragment"
             app:destination="@id/newsDetailsFragment" />
@@ -29,7 +32,8 @@
     <fragment
         android:id="@+id/newsDetailsFragment"
         android:name="com.onramp.vurzika.newsapp.ui.newsdetails.view.NewsDetailsFragment"
-        android:label="@string/title_news_details">
+        android:label="@string/title_news_details"
+        tools:layout="@layout/fragment_news_details">
         <argument
             android:name="newsArticleId"
             app:argType="string" />
@@ -37,5 +41,6 @@
     <activity
         android:id="@+id/settingsActivity"
         android:name="com.onramp.vurzika.newsapp.ui.settings.view.SettingsActivity"
-        android:label="SettingsActivity" />
+        android:label="SettingsActivity"
+        tools:layout="@layout/activity_settings" />
 </navigation>

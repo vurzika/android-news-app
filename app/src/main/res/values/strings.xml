@@ -8,7 +8,7 @@
     <string name="title_latest_news">Latest News</string>
 
     <string name="message_error_default">Oops. Something wrong has happened. Please try again later</string>
-    <string name="message_info_offline">Looks like you are currently offline. Please try again later or use favorites section</string>
+    <string name="message_info_offline">Looks like you are currently offline. Please try again later or use Favorites section</string>
 
     <!-- News List: Menu -->
     <string name="action_settings">Settings</string>

@@ -3,8 +3,8 @@ package com.onramp.vurzika.newsapp.ui.settings.view
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.preference.PreferenceFragmentCompat
+import com.google.android.material.snackbar.Snackbar
 import com.onramp.vurzika.newsapp.R
 import com.onramp.vurzika.newsapp.ui.settings.SettingsContract
 import com.onramp.vurzika.newsapp.ui.settings.presenter.SettingsPresenter
@@ -21,11 +21,11 @@ class SettingsFragment @Inject constructor(
     // MVP
 
     override fun notifyAutomaticNewsUpdatesCheckScheduled() {
-        Toast.makeText(context, getString(R.string.message_automatic_news_updates_check_scheduled), Toast.LENGTH_LONG).show()
+        Snackbar.make(requireView(), getString(R.string.message_automatic_news_updates_check_scheduled), Snackbar.LENGTH_LONG).show()
     }
 
     override fun notifyAutomaticNewsUpdatesCheckCancelled() {
-        Toast.makeText(context, getString(R.string.message_automatic_news_updates_check_cancelled), Toast.LENGTH_LONG).show()
+        Snackbar.make(requireView(), getString(R.string.message_automatic_news_updates_check_cancelled), Snackbar.LENGTH_LONG).show()
     }
 
     // MVP: Generic Events Handling

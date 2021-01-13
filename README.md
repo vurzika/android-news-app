@@ -1,115 +1,127 @@
-# Onramp Android Take Home Project 
+# Android Application Overview
 
-## Overview 🤖
+This application is a "newsfeed" application example that allows displaying news from https://spaceflightnewsapi.net using public API provided by the website.
 
-Congratulations for making it this far in the interview process for the Twitch Apprenticeship at Onramp! This project seeks to better inform the Onramp team of your experience with the Kotlin programming language and Android development as well as prepare you for your interview at Twitch. 
+The application provides the following features:
+* Ability to display the latest news from the feed
+* Ability to view news details
+* Ability to store selected news for the offline reading
+* Ability to customize application UI via settings
+* Ability to subscribe for periodic notifications about the news updates
+* Ability to copy news article link to the clipboard and/or open via external browser
 
-You will have seven days to complete this project. We expect those who have a moderate level of Android development experience to spend between 30 and 40 hours to design, implement, document, and submit the project to us. Depending on your level, it may take more or less time, so please plan accordingly.
+# Application Requirements Checklist
 
-**The project is due on Wednesday, January 13 at 9:00am PT/ 12:00pm ET**
+| Requirement | Status | How Was Implemented |
+|:-----------:|:------:|:-------------------:|
+| Use of at least two Activities | ✅ | Implemented MainActivity and SettingsActivity |
+| Use of at least one Service | ✅ | Indirectly using Service via WorkManager architecture component to enable periodic news updates checks in the background. (Under the hood WorkManager uses an underlying job dispatching service) |
+| The usage of the MVP | ✅ | Each screen has the corresponding Views (implemented by Fragments and Activities) and Presenter classes. Model related classes are located in the separate package and accessed via Repository. Repository is retrieving the data from 3 data source types (local database, network, preferences) |
+| Use of REST API | ✅ | Accessing REST APIs provided by https://spaceflightnewsapi.net. Using Retrofit for data retrieval and Jackson for data deserialization. |
+| Usage of at least five UI components from the Android Material Design Component Library | ✅ | Application is built using components provided by Android Material Design component library. Example components used in the app: Toolbar / Collapsing Toolbar, Lists (Recycler View), Bottom Navigation, FAB, Switch, CircularProgressIndicator, Snackbar and others. |
+| The usage of data persistence like Android Room | ✅ | Offline data is stored using Android Room persistence library |
 
-#### Project Summary:
-*   Total time available to complete: 7 days
-*   Due date/time: Wednesday, January 13 at 9:00am PT/ 12:00pm ET
-*   Expected development time to complete: 30 - 40 hours 
-*   Required stack/tools: a computer with Android Studio
+# Application UI Design
 
-## Description and Details 🔎 
+Application UI is built using Android Material Design Component Library and using Theme.MaterialComponents.Light.DarkActionBar theme and Material component styles across the board.
 
-#### Android App Requirements
+## News List Screen
+<img src="screenshots/latest-news-screen.jpg" width="200" /> <img src="screenshots/latest-news-offline.png" width="200" /> <img src="screenshots/latest-news-error.png" width="200" />
 
-For this project, we want you to build an Android application that is one of the following: 
-*   A newsfeed app
-*   A weather app
-*   A photo gallery
-*   An audio/video playback app
+News list displays the list of news articles received via API
+* It uses RecyclerView + SwipeRefreshLayout to display the list of news articles
+* Components provide corresponding loading, refresh and list items update animations
+* Pull-to-refresh functionally allows to refresh the data in the list
+* Tapping on the list item allows to navigate to the Details screen 
+* In case application is offline, special "offline" view is displayed instead of the list
+* In case of errors, "error" view is displayed instead of the list
+* Each news list item downloads the corresponding news item thumbnail from the Internet (can be disabled via Settings screen)
 
-Consider which of these projects you’d be most excited to work on, not what you think your interviewers or Onramp would like to see. 
+## Offline News Screen
+<img src="screenshots/favorites-screen.gif" width="200" /> <img src="screenshots/favorites-screen-empty.png" width="200" />
 
-**Scope your features and functionality to what you can reasonably accomplish by the due date. Your application must include the following architectural requirements:**
+Offline News displays the list of news articles stored locally
+* It uses RecyclerView to display the data
+* It is possible to swipe the list item to remove it from the list (with animation)
+* It is possible to tap the list item to navigate to the Details screen
+* In case there are no items in the list, "empty" view is displayed instead of the list
 
-*   Use of at least two [Activities](https://developer.android.com/guide/components/activities/intro-activities) and one [Fragment](https://developer.android.com/guide/fragments). 
-*   Use of at least one [Service](https://developer.android.com/guide/components/services).
-*   The usage of the [MVP](https://www.vogella.com/tutorials/AndroidArchitecture/article.html) architectural pattern.
-*   Use of a [REST API](https://guides.codepath.com/android/consuming-apis-with-retrofit).
-*   Usage of at least five UI components from the [Android Material Design Component Library](https://material.io/design/components/bottom-navigation.html).
-*   The usage of data persistence like Android [Room](https://developer.android.com/training/data-storage/room).
+## News Details Screen
+<img src="screenshots/details-screen.jpg" width="200" />
 
-**Note: you will need to detail where and how your Android App meets these requirements in your repository's README file when you submit your project.**
+Details screen displays the details of the selected news article
+* It uses collapsing toolbar to preview the image of the news article
+* If toolbar is collapsed, corresponding image is hidden and fab button changes location to avoid conflict with the menu items
+* It allows the user to copy news Url to the clipboard
+* It allows the user to open news Url with external browser
 
-#### A Note on Researching and Plagiarism
+## Settings Screen
+<img src="screenshots/settings-screen.png" width="200" />
 
-You are actively encouraged to research the web, books, videos, or tutorials for this project. That said, we expect all code that is submitted to be your own (e.g. this project should **NOT** be completed with another person). That means that we expect each candidate to refrain from copying and/or pasting code into the project. If we find copied code in your project, we will have to disqualify you. We’ve included some suggested web and video resources at the end of this document.
+Settings screen allows the user to configure application settings such as:
+* *Visibility of the Thumbnails* - if disabled, list no longer displays the corresponding thumbnails for the news articles
+* *Background Refresh* - if enabled, application will launch a background service to periodically check if server has any new news articles. In case server has news that are newer than the user has seen, it will display the local notification
 
-## What we're looking for 🌟
+## Notification
+<img src="screenshots/notification-example.png" width="200" />
 
-We will evaluate your project by assessing the overall strength and quality of the following five factors: 
+Notification is displayed every time when the background service detects that server has new data. It allows the user to return to the application by tapping on the notification
 
-#### UI Design
+## Overall Navigation
 
-Android users expect your application to look and behave in a way that's consistently intuitive. Your Android application should utilize thoughtful [animations](https://material.io/design/motion/), [patterns](https://material.io/design/), [style](https://material.io/design/color/), [components](https://material.io/components) and [layouts](https://material.io/design/layout/understanding-layout.html) to create a highly usable user interface.
+For overall navigation application is using Navigation Component + Navigation Graph as follows:
 
-#### Architecture Pattern
+<img src="screenshots/application-navigation.png" />
 
-An architecture pattern enables you to define a guide for how a piece of software should function, such that it can be scalable, maintainable, and testable. Common patterns for Android applications include [MVP](https://www.vogella.com/tutorials/AndroidArchitecture/article.html) (Model View Presenter), [MVC](https://medium.com/upday-devs/android-architecture-patterns-part-1-model-view-controller-3baecef5f2b6) (Model View Controller), and [MVVM](https://medium.com/@husayn.hakeem/android-by-example-mvvm-data-binding-introduction-part-1-6a7a5f388bf7) (Model View ViewModel).
+Application entry point is MainActivity that contains bottom view navigation and is responsible for navigation graph as well as switching between Live news and Saved news tabs.
 
-**It is required that you leverage the MVP pattern within your Android app for this project.** Keep in mind the concept of [Separation of Concerns](https://developer.android.com/jetpack/guide).
+# High Level Architectural Overview
 
-#### Core Android Components
+Overall application, per task requirements, is using MVP architecture. The following diagram represents high level application architecture
 
-[Activities](https://developer.android.com/guide/components/activities/intro-activities), [Services](https://developer.android.com/guide/components/services), [Broadcast Receivers](https://developer.android.com/reference/android/content/BroadcastReceiver.html), and [Content Providers](https://developer.android.com/guide/topics/providers/content-providers.html) are four types of Android Application components, which are the essential building blocks of an Android app. Each serves a distinct purpose and has a distinct lifecycle that defines how the component is created and destroyed. 
+<img src="screenshots/arch-diagram.jpeg" />
 
-The usage of Activities and Services are extremely common when implementing Android apps and are therefore **mandatory** to include in your project, however, the usage of a Broadcast Receiver and/or Content Provider is optional, depending on the app design.
+Application has 2 activities (Main and Settings) that are entry points and responsible for top level navigation. As application is built using navigation components, it is using fragment based navigation, as result activities contain minimum logic. 
 
-#### Android Development Best Practices
+Each screen (view) displayed to the user in the application is represented by 3 components
+* **<Screen>Contract** (e.g. LatestNewsContract) that defines interfaces for the screen's View and the screen's Presenter
+* **<Screen>Contract.View** that is implemented by **<Screen>Fragment** class that is responsible for UI logic (e.g. LatestNewsFragment) 
+* **<Screen>Contract.Presenter** that is implemented by **<Screen>Presenter** class (e.g. LatestNewsPresenter) that is responsible for managing UI and retrieving data from the model (via repository)
 
-It's important to subscribe to a set of best practices when designing and implementing an Android app. Be mindful of these widely accepted principles:
+Model Layer consists of 
+* **Repository** - responsible for the data retrieval from/to various data providers such as API, database and settings
+* Database (Room)
+    * **NewsArticlesDao** - responsible for executing database queries
+    * **NewsArticle** - Entity that is stored in the data base / application representation of the news object
+* API (Retrofit)
+    * **SpaceFlightNewsAPIService** - responsible for the data retrieval from API and deserialization
+    * **ArticleSummary** and **ArticleDetails** - data transfer object that represent models on the server side
+* **SharedPreferences** (Android Component) - stores user preferences locally on the device
 
-*   Keep your code [DRY](https://code.tutsplus.com/tutorials/3-key-software-principles-you-must-understand--net-25161) (don't repeat yourself). Also view this [Wikipedia article](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself).
-*   Maintain a [separation of concerns](https://developer.android.com/jetpack/guide) within your Android components.
-*   Specify good [project structure](https://developer.android.com/studio/intro).
+Application Service
+* **CheckLatestNewsWorker** - A class that can perform check for latest news asynchronously in the background service via *WorkManager*
+* **NotificationManager** - responsible for displaying the local notifications 
 
-Using these principles will result in a high quality user experience while efficiently utilizing phone hardware resources and ensuring other developers can easily navigate through your code.
+Apart from the main application classes there are several base classes
+* Base MVP Classes
+    * **BaseContract** - defines common interface for View-Presenter contract
+    * **BasePresenter** - responsible for handling common "presenter" fragment logic
+    * **BaseFragment** - responsible for handling common "view" fragment logic
+* **BaseNavigationFragment** - responsible for handing common navigation component logic
+* **BindingAdapters** - set of custom data binding adapters for DataBinding
+* **MainModule** - provides (constructs) dependencies for dependency injection
 
-#### Android Application Description
+## Additional Technologies Used
 
-As detailed above, each project submission must include a README file, which provides an overview of the Android application and details the app's overall MVP architecture as well as your design decisions. Screenshots of the Android app taken from the Android Studio emulator are also required. This task assesses the critical competency of communicating and documenting technical concepts.
-
-#### Version Control
-
-We expect you to attempt to use version control best practices in your project. We will evaluate this by looking at the frequency of commits, commit messages, and diffs. We don’t expect you to be a pro with git, but we do expect you to be able to commit frequently rather than committing everything all at once.
-
-## What we are NOT Evaluating
-
-**Testing**
-
-Testing frameworks and strategies are intentionally **NOT** included within the rubric because we want you to dedicate your time to building a functional application (We do realize that UI and Android component testing are critical practices of Android Development, but this take home project prioritizes a focus on surfacing Kotlin/Android development proficiency).
-
-**Feature depth**
-
-You won’t be earning extra points for having a bunch of features. Focus on creating a clean, simple application that addresses all of the requirements and is documented properly for submission.
-
-## Submission Information 🚀
-
-#### Submission Format
-
-This repository will be your starting point. Please download (not clone or fork) this Github repository ([onramp-android-take-home](https://github.com/onramp-io/onramp-android-take-home)) and upload changes to a newly created repository. Once the Android application has been completed, you'll be submitting a link to the new repository you created. Prior to submitting your project, you should update the README file to provide the following information:
-
-*   A high level architectural overview of your Android application. e.g. names, relationships and purposes of all components, including Activities, Services, Content Providers, Broadcast Receivers, etc. 
-*   A brief description of any design patterns that you leveraged.
-*   [Screenshots](https://developer.android.com/studio/debug/am-screenshot) of each Activity View and descriptions of the overall user flow.
-
-#### Submission Deadline + Process
-
-You must submit your project by **9:00am PT/12:00pm ET, on January 13, 2020 using [this form](https://docs.google.com/forms/d/e/1FAIpQLSdFBo328et9VHd04fFTZ7MRfIUD5le-jimyl0UccCs3IBYHoQ/viewform).** Be sure that your project is viewable by the Onramp team in a **public** repository (you can make it private after January 28, 2021).
-
-Once you’ve submitted your project, you are expected to stop working on it. Any commits that occur after submission or the deadline will not be reviewed. 
-
-## Additional Resources 📚
-
-*   [Android Studio](https://developer.android.com/studio)
-*   [Android Application Fundamentals](https://developer.android.com/guide/components/fundamentals)
-*   [Design for Android Developers](https://developer.android.com/design)
-*   [Android Material Design Component Library](https://material.io/design/components/bottom-navigation.html)
-*   [Basic concepts of software architecture patterns in Android](https://android.jlelse.eu/basic-concepts-of-software-architecture-patterns-in-android-c76e53f46cba)
-*   [Twitch for Android: from Meme to Dream](https://blog.twitch.tv/en/2019/02/26/twitch-for-android-from-meme-to-dream-141e6b7e8416/) (Twitch Blog post)
+This application is 100% Kotlin based and demonstrates the use of the following technologies:
+* [Material Design Component Library](https://material.io/develop/android) for building UI aligned with material design guidelines
+* [DataBinding](https://developer.android.com/topic/libraries/data-binding) for defining layouts in declarative format
+* [Navigation Component](https://developer.android.com/guide/navigation/navigation-getting-started) for navigation
+* [Hilt](https://developer.android.com/training/dependency-injection/hilt-android) for Dependency Injection
+* [Coroutines](https://developer.android.com/kotlin/coroutines) for making async calls to APIs and Database
+* [Room](https://developer.android.com/training/data-storage/room) for working with data stored in the Database
+* [Retrofit](https://square.github.io/retrofit/) for data retrieval
+* [Jackson](https://github.com/FasterXML/jackson) for JSON data deserialization
+* [Picasso](https://github.com/square/picasso) for loading thumbnails
+* [WorkManager](https://developer.android.com/topic/libraries/architecture/workmanager) to schedule background services
+* [Android Studio sample data resources](https://developer.android.com/studio/write/tool-attributes#toolssample_resources) to preview actual data in design time
