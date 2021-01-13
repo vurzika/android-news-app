@@ -22,7 +22,7 @@ class NewsRepository @Inject constructor(
 ) {
 
     private val lastSeenNewsDateSettingKey by lazy {
-        context.getString(R.string.setting_key_last_seen_news_date);
+        context.getString(R.string.setting_key_last_seen_news_date)
     }
 
     suspend fun getNewsArticles() = withContext(Dispatchers.IO) {

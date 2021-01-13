@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 class SettingsPresenter @Inject constructor(
         @ApplicationContext val context: Context,
-        val userSettings: SharedPreferences
+        private val userSettings: SharedPreferences
 ) : BasePresenter<SettingsContract.View>(), SettingsContract.Presenter, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private companion object {
@@ -38,7 +38,7 @@ class SettingsPresenter @Inject constructor(
 
     private fun reschedulePeriodicNotifications() {
 
-        val currentRefreshInterval = getCurrentRefreshInterval();
+        val currentRefreshInterval = getCurrentRefreshInterval()
 
         if (currentRefreshInterval == 0L) {
             WorkManager.getInstance(context).cancelUniqueWork(WORD_NAME_NEWS_AUTO_REFRESH)
