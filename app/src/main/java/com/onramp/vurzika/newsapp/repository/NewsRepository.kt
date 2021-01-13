@@ -33,7 +33,8 @@ class NewsRepository @Inject constructor(
                     summary = it.summary ?: "Article Summary Not Available",
                     newsSite = it.newsSite ?: "Unknown Source",
                     publicationDate = it.publishedAt,
-                    thumbnailUrl = it.imageUrl
+                    thumbnailUrl = it.imageUrl,
+                    url = it.url
             )
         }
     }
@@ -51,7 +52,8 @@ class NewsRepository @Inject constructor(
                         summary = it.summary ?: "Article Summary Not Available",
                         newsSite = it.newsSite ?: "Unknown Source",
                         publicationDate = it.publishedAt,
-                        thumbnailUrl = it.imageUrl
+                        thumbnailUrl = it.imageUrl,
+                        url = it.url
                 )
             }
         }

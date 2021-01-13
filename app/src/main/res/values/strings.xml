@@ -21,6 +21,7 @@
 
     <!-- Fragment: News Details -->
     <string name="title_news_details">News Details</string>
+    <string name="message_link_copied_to_clipboard">News article link copied to the clipboard</string>
 
     <!-- News Details: Menu -->
     <string name="action_open_with">Open With …</string>

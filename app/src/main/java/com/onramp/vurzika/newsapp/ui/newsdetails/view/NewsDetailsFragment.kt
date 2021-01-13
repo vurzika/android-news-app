@@ -1,5 +1,7 @@
 package com.onramp.vurzika.newsapp.ui.newsdetails.view
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -7,6 +9,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.navArgs
@@ -19,6 +22,7 @@ import com.onramp.vurzika.newsapp.ui.newsdetails.NewsDetailsContract
 import com.onramp.vurzika.newsapp.ui.newsdetails.presenter.NewsDetailsPresenter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class NewsDetailsFragment : BaseNavigationFragment<NewsDetailsContract.View>(), NewsDetailsContract.View {
@@ -64,6 +68,16 @@ class NewsDetailsFragment : BaseNavigationFragment<NewsDetailsContract.View>(), 
         // TODO("Not yet implemented")
     }
 
+    override fun notifyLinkCopiedToClipboard() {
+        Toast.makeText(context, getString(R.string.message_link_copied_to_clipboard), Toast.LENGTH_LONG).show()
+    }
+
+    override fun openLinkWithExternalBrowser(pageUri: Uri) {
+        val intent = Intent(Intent.ACTION_VIEW, pageUri)
+
+        startActivity(intent)
+    }
+
     // Options Menu Configuration
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -74,8 +88,14 @@ class NewsDetailsFragment : BaseNavigationFragment<NewsDetailsContract.View>(), 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_copy_link -> true
-            R.id.action_open_with -> true
+            R.id.action_copy_link -> {
+                presenter.onLinkCopyActionSelected()
+                true
+            }
+            R.id.action_open_with -> {
+                presenter.onOpenWithActionSelected()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

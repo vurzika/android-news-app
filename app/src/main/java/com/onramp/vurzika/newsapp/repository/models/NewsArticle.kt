@@ -17,6 +17,7 @@ data class NewsArticle(
         val newsSite: String,
         val publicationDate: Date,
         val thumbnailUrl: String?,
+        val url: String?,
 
         @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
         val thumbnailData: Bitmap? = null
