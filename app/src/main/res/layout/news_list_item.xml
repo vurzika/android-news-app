@@ -33,13 +33,15 @@
             android:orientation="horizontal"
             android:paddingTop="@dimen/padding_components"
             android:paddingEnd="@dimen/padding_side"
-            android:paddingBottom="@dimen/padding_components">
+            android:paddingBottom="@dimen/padding_components"
+            tools:ignore="RtlSymmetry">
 
             <ImageView
                 android:id="@+id/news_thumbnail"
                 android:layout_width="@dimen/size_list_item_image_width"
                 android:layout_height="@dimen/size_list_item_image_height"
                 android:layout_marginEnd="@dimen/padding_side_list_image_extra"
+                android:contentDescription="@string/content_description_news_article_image"
                 android:scaleType="centerCrop"
                 android:visibility="@{(isThumbnailEnabled &amp;&amp; newsArticle.thumbnailUrl != null) ? View.VISIBLE : View.GONE}"
                 app:imageUrl="@{newsArticle.thumbnailUrl}"

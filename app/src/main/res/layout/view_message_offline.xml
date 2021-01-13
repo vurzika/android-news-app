@@ -5,18 +5,18 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/errorMessageText"
+        android:contentDescription="@string/content_description_offline_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_offline"
+        app:layout_constraintBottom_toTopOf="@+id/offlineMessageText"
         app:tint="@color/colorPrimary" />
 
     <TextView
-        android:id="@+id/errorMessageText"
+        android:id="@+id/offlineMessageText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingHorizontal="@dimen/padding_components"
@@ -24,7 +24,7 @@
         android:text="@string/message_info_offline"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-        android:textColor="@color/colorPrimary"
+        android:textColor="?attr/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

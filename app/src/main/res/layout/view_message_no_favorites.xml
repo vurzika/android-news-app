@@ -5,12 +5,11 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/message_favorites_empty_icon"
         android:textSize="96sp"
-        app:layout_constraintBottom_toTopOf="@+id/errorMessageText"
+        app:layout_constraintBottom_toTopOf="@+id/noFavoritesMessageText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,7 +17,7 @@
         app:tint="@color/colorPrimary" />
 
     <TextView
-        android:id="@+id/errorMessageText"
+        android:id="@+id/noFavoritesMessageText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingHorizontal="@dimen/padding_components"
@@ -26,7 +25,7 @@
         android:text="@string/message_favorites_empty"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-        android:textColor="@color/colorPrimary"
+        android:textColor="?attr/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

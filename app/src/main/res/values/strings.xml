@@ -51,4 +51,10 @@
     <string name="notifications_new_news_available_title">New News Available</string>
     <string name="notifications_new_news_available_descriptions">Tap to get list of latest news</string>
 
+    <!-- Content Descriptions -->
+    <string name="content_description_news_article_image">News article image</string>
+    <string name="content_description_fab_add_to_favorites">Save for offline reading button</string>
+    <string name="content_description_error_icon">Error Icon</string>
+    <string name="content_description_offline_icon">Offline Icon</string>
+
 </resources>
