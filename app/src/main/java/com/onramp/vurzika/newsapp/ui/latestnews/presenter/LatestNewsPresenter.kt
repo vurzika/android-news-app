@@ -1,6 +1,7 @@
 package com.onramp.vurzika.newsapp.ui.latestnews.presenter
 
 import com.onramp.vurzika.newsapp.repository.NewsRepository
+import com.onramp.vurzika.newsapp.repository.models.NewsArticle
 import com.onramp.vurzika.newsapp.ui.base.mvp.BasePresenter
 import com.onramp.vurzika.newsapp.ui.latestnews.LatestNewsContract
 import kotlinx.coroutines.launch
@@ -25,12 +26,23 @@ class LatestNewsPresenter @Inject constructor() : BasePresenter<LatestNewsContra
             view?.showLoading()
 
             try {
-                view?.showNews(newsRepository.getNewsArticles())
+                val newsList = newsRepository.getNewsArticles()
+
+                saveLatestNewsUpdateDate(newsList)
+
+                view?.showNews(newsList)
             } catch (error: IOException) {
                 view?.showMessageAppOffline()
             } catch (error: Exception) {
                 view?.showError(error.message)
             }
+        }
+    }
+
+    private fun saveLatestNewsUpdateDate(newsList: List<NewsArticle>) {
+        val latestNews = newsList.maxByOrNull { it.publicationDate }
+        latestNews?.let {
+            newsRepository.setLastRetrievedNewsDate(it.publicationDate)
         }
     }
 }

@@ -29,6 +29,9 @@
     <!-- Activity: Settings -->
     <string name="title_activity_settings">Application Settings</string>
 
+    <string name="message_automatic_news_updates_check_scheduled">Scheduled Automatic News Updates Check</string>
+    <string name="message_automatic_news_updates_check_cancelled">Automatic News Updates Check Cancelled</string>
+
     <string name="settings_section_header_display">Display Settings</string>
     <string name="settings_show_thumbnails">Show Thumbnails</string>
     <string name="setting_show_thumbnails_summary">Automatically download and display news thumbnails when viewing latest news</string>
@@ -38,5 +41,13 @@
     <string name="setting_key_background_refresh_interval">setting_key_background_refresh_interval</string>
     <string name="setting_background_refresh_interval">Refresh Interval</string>
     <string name="setting_background_refresh_internal_dialog_title">Select Refresh Interval</string>
+
+    <string name="setting_key_last_seen_news_date">setting_key_last_seen_news_date</string>
+
+    <!-- Notifications -->
+    <string name="notifications_channel_name">New News Notifications</string>
+    <string name="notifications_channel_description">Information about new news available in application</string>
+    <string name="notifications_new_news_available_title">New News Available</string>
+    <string name="notifications_new_news_available_descriptions">Tap to get list of latest news</string>
 
 </resources>
