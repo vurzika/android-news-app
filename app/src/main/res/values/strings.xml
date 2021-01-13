@@ -16,7 +16,7 @@
     <!-- Fragment: Offline News -->
     <string name="title_offline_news">Offline News</string>
 
-    <string name="message_favorites_empty">No saved news stories yet. Use ★️ to add new news articles to this section</string>
+    <string name="message_favorites_empty">No saved news stories yet.\nUse ⭐️️ to add new news articles to this section</string>
     <string name="message_favorites_empty_icon">🧐</string>
 
     <!-- Fragment: News Details -->

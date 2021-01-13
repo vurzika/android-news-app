@@ -30,4 +30,16 @@ class OfflineNewsPresenter @Inject constructor() : BasePresenter<OfflineNewsCont
             }
         }
     }
+
+    override fun onNewsArticleRemovedFromOfflineList(newsArticleId: String) {
+        launch {
+            try {
+                newsRepository.deleteNewsArticle(newsArticleId)
+
+                refreshOfflineNews()
+            } catch (error: Error) {
+                view?.showError(error.message)
+            }
+        }
+    }
 }

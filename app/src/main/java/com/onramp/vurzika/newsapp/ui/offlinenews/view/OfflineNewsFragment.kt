@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.onramp.vurzika.newsapp.R
 import com.onramp.vurzika.newsapp.databinding.FragmentOfflineNewsBinding
 import com.onramp.vurzika.newsapp.repository.models.NewsArticle
@@ -48,7 +50,32 @@ class OfflineNewsFragment : BaseNavigationFragment<OfflineNewsContract.View>(), 
 
         binding.newsList.adapter = adapter
 
+        initSwipeToDelete()
+
         return binding.root
+    }
+
+    private fun initSwipeToDelete() {
+        ItemTouchHelper(object : ItemTouchHelper.Callback() {
+            // enable the items to swipe to the left or right
+            override fun getMovementFlags(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder
+            ): Int =
+                    makeMovementFlags(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT)
+
+            override fun onMove(
+                    recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder
+            ): Boolean = false
+
+            // on swipe notify presenter to apply changes in model
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                (viewHolder as NewsArticlesListAdapter.ViewHolder).newsArticleId.let {
+                    presenter.onNewsArticleRemovedFromOfflineList(it)
+                }
+            }
+        }).attachToRecyclerView(binding.newsList)
     }
 
     override fun onResume() {

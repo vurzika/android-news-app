@@ -14,5 +14,8 @@ interface OfflineNewsContract {
         fun showMessageEmptyFavorites()
     }
 
-    interface Presenter : BaseContract.Presenter<View>
+    interface Presenter : BaseContract.Presenter<View> {
+
+        fun onNewsArticleRemovedFromOfflineList(newsArticleId: String)
+    }
 }

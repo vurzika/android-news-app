@@ -40,7 +40,7 @@ class NewsArticlesListAdapter @Inject constructor() :
 
     class ViewHolder(private val binding: NewsListItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        private var newsArticleId: String = ""
+        var newsArticleId: String = ""
 
         fun bind(item: NewsArticle, isThumbnailEnabled: Boolean, clickListener: NewsArticleClickListener) {
             newsArticleId = item.id
