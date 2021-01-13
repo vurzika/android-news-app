@@ -69,16 +69,26 @@ class NewsDetailsFragment : BaseNavigationFragment<NewsDetailsContract.View>(), 
         return presenter
     }
 
-    override fun showLoadingIndicator(visible: Boolean) {
-        // TODO("Not yet implemented")
+    override fun showLoadingIndicator() {
+        binding.loadingIndicator.visibility = View.VISIBLE
+
+        binding.fab.visibility = View.GONE
+        setMenuVisibility(false)
     }
 
     override fun showArticle(newsArticle: NewsArticle) {
+        binding.loadingIndicator.visibility = View.GONE
+
+        setMenuVisibility(true)
+        binding.fab.visibility = View.VISIBLE
         binding.newsArticle = newsArticle
     }
 
     override fun showError(errorMessage: String) {
-        // TODO("Not yet implemented")
+        binding.loadingIndicator.visibility = View.GONE
+        binding.appBar.setExpanded(false)
+
+        binding.viewErrorMessage.visibility = View.VISIBLE
     }
 
     override fun notifyLinkCopiedToClipboard() {

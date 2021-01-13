@@ -28,7 +28,7 @@ class NewsDetailsPresenter @Inject constructor(
 
     override fun onViewCreated() {
         launch {
-            view?.showLoadingIndicator(true)
+            view?.showLoadingIndicator()
 
             try {
                 newsArticle = newsRepository.getNewsArticle(newsArticleId)
@@ -36,8 +36,6 @@ class NewsDetailsPresenter @Inject constructor(
                 view?.showArticle(newsArticle)
             } catch (error: Exception) {
                 view?.showError(error.message ?: "Unknown error")
-            } finally {
-                view?.showLoadingIndicator(false)
             }
         }
     }

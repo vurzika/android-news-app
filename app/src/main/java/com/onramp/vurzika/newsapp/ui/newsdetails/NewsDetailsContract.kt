@@ -8,7 +8,7 @@ class NewsDetailsContract {
 
     interface View : BaseContract.View {
 
-        fun showLoadingIndicator(visible: Boolean)
+        fun showLoadingIndicator()
 
         fun showArticle(newsArticle: NewsArticle)
 

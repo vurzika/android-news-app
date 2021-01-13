@@ -134,5 +134,19 @@
             app:layout_anchorGravity="top|end"
             android:src="@{newsArticle.stored ? @drawable/ic_favorites_selected : @drawable/ic_favorites_unselected}" />
 
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/loading_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:indeterminate="true"
+            android:visibility="gone"
+            app:showAnimationBehavior="inward" />
+
+        <include
+            android:id="@+id/view_error_message"
+            layout="@layout/view_message_error"
+            android:visibility="gone" />
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
