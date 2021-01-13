@@ -47,7 +47,7 @@ Offline News displays the list of news articles stored locally
 * In case there are no items in the list, "empty" view is displayed instead of the list
 
 ## News Details Screen
-<img src="screenshots/details-screen.jpg" width="200" />
+<img src="screenshots/details-screen.jpg" width="200" /> <img src="screenshots/details-screen.gif" width="200" />
 
 Details screen displays the details of the selected news article
 * It uses collapsing toolbar to preview the image of the news article
