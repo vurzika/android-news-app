@@ -3,6 +3,7 @@ package com.onramp.vurzika.newsapp.ui.newsdetails.view
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -11,8 +12,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.appbar.AppBarLayout
 import com.onramp.vurzika.newsapp.R
 import com.onramp.vurzika.newsapp.databinding.FragmentNewsDetailsBinding
 import com.onramp.vurzika.newsapp.repository.models.NewsArticle
@@ -46,6 +49,16 @@ class NewsDetailsFragment : BaseNavigationFragment<NewsDetailsContract.View>(), 
         binding.fab.setOnClickListener {
             presenter.onSetFavoriteSelected()
         }
+
+        binding.appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
+
+            (binding.fab.layoutParams as CoordinatorLayout.LayoutParams).anchorGravity =
+                    if (binding.appBar.height + verticalOffset - binding.fab.height / 4 < binding.toolbar.height) {
+                        Gravity.BOTTOM or Gravity.END
+                    } else {
+                        Gravity.TOP or Gravity.END
+                    }
+        })
 
         return binding.root
     }
