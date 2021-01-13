@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#000098</color>
+    <color name="colorPrimaryVariant">#000069</color>
+
+    <color name="colorSecondary">#EF6C00</color>
+    <color name="colorOnSecondary">#FFFFFF</color>
+
     <color name="colorBackground">#FFFFFF</color>
 
     <color name="colorToolbarOverlay">#44000000</color>
