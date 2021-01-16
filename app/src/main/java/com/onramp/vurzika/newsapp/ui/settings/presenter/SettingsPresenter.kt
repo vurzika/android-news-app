@@ -14,12 +14,12 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class SettingsPresenter @Inject constructor(
-        @ApplicationContext val context: Context,
+        @ApplicationContext private val context: Context,
         private val userSettings: SharedPreferences
 ) : BasePresenter<SettingsContract.View>(), SettingsContract.Presenter, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private companion object {
-        const val WORD_NAME_NEWS_AUTO_REFRESH = "WORD_NAME_NEWS_AUTO_REFRESH"
+        const val WORK_NAME_NEWS_AUTO_REFRESH = "WORK_NAME_NEWS_AUTO_REFRESH"
     }
 
     private val settingsKeyBackgroundRefreshInterval by lazy {
@@ -41,7 +41,7 @@ class SettingsPresenter @Inject constructor(
         val currentRefreshInterval = getCurrentRefreshInterval()
 
         if (currentRefreshInterval == 0L) {
-            WorkManager.getInstance(context).cancelUniqueWork(WORD_NAME_NEWS_AUTO_REFRESH)
+            WorkManager.getInstance(context).cancelUniqueWork(WORK_NAME_NEWS_AUTO_REFRESH)
 
             view?.notifyAutomaticNewsUpdatesCheckCancelled()
         } else {
@@ -54,7 +54,7 @@ class SettingsPresenter @Inject constructor(
 
             WorkManager.getInstance(context)
                     .enqueueUniquePeriodicWork(
-                            WORD_NAME_NEWS_AUTO_REFRESH,
+                            WORK_NAME_NEWS_AUTO_REFRESH,
                             ExistingPeriodicWorkPolicy.REPLACE,
                             periodicWork
                     )

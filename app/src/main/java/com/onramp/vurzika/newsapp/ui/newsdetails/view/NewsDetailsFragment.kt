@@ -87,6 +87,7 @@ class NewsDetailsFragment : BaseNavigationFragment<NewsDetailsContract.View>(), 
     override fun showError(errorMessage: String) {
         binding.loadingIndicator.visibility = View.GONE
         binding.appBar.setExpanded(false)
+        setMenuVisibility(false)
 
         binding.viewErrorMessage.visibility = View.VISIBLE
     }

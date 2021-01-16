@@ -14,8 +14,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class NewsDetailsPresenter @Inject constructor(
-        @ApplicationContext val context: Context,
-        private var newsRepository: NewsRepository
+        @ApplicationContext private val context: Context,
+        private val newsRepository: NewsRepository
 ) : BasePresenter<NewsDetailsContract.View>(), NewsDetailsContract.Presenter {
 
     private lateinit var newsArticle: NewsArticle

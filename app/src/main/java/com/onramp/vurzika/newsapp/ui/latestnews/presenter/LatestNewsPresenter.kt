@@ -8,10 +8,9 @@ import kotlinx.coroutines.launch
 import java.io.IOException
 import javax.inject.Inject
 
-class LatestNewsPresenter @Inject constructor() : BasePresenter<LatestNewsContract.View>(), LatestNewsContract.Presenter {
-
-    @Inject
-    lateinit var newsRepository: NewsRepository
+class LatestNewsPresenter @Inject constructor(
+        private val newsRepository: NewsRepository
+) : BasePresenter<LatestNewsContract.View>(), LatestNewsContract.Presenter {
 
     override fun onViewCreated() {
         refreshNews()

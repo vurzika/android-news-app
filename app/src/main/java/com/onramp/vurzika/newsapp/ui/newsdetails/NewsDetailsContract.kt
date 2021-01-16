@@ -4,7 +4,7 @@ import android.net.Uri
 import com.onramp.vurzika.newsapp.repository.models.NewsArticle
 import com.onramp.vurzika.newsapp.ui.base.mvp.BaseContract
 
-class NewsDetailsContract {
+interface NewsDetailsContract {
 
     interface View : BaseContract.View {
 
