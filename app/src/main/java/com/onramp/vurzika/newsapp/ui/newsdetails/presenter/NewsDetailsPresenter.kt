@@ -62,6 +62,7 @@ class NewsDetailsPresenter @Inject constructor(
 
         newsArticle.url?.let {
 
+            // copy link to clipboard as text with link
             clipboardManager.setPrimaryClip(ClipData.newUri(
                     context.contentResolver,
                     newsArticle.summary,

@@ -19,6 +19,7 @@ class CheckLatestNewsWorker @WorkerInject constructor(
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
 
+        // show notification if latestNewsDate > lastRetrievedNewsDate
         try {
             val latestNewsDate = repository.getLatestAvailableNewsDate()
             val lastRetrievedNewsDate = repository.getLastRetrievedNewsDate()

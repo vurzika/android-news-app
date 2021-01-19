@@ -50,6 +50,8 @@ class NewsDetailsFragment : BaseNavigationFragment<NewsDetailsContract.View>(), 
             presenter.onSetFavoriteSelected()
         }
 
+        // To change location of fab button when toolbar is collapsed
+        // to avoid overlap with menu items
         binding.appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
 
             (binding.fab.layoutParams as CoordinatorLayout.LayoutParams).anchorGravity =

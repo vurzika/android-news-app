@@ -27,6 +27,8 @@ class LatestNewsPresenter @Inject constructor(
             try {
                 val newsList = newsRepository.getNewsArticles()
 
+                // Save latest news date to allow background
+                // check working to check for this date changes
                 saveLatestNewsUpdateDate(newsList)
 
                 view?.showNews(newsList)

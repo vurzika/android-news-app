@@ -26,6 +26,7 @@ class SettingsPresenter @Inject constructor(
         context.getString(R.string.setting_key_background_refresh_interval)
     }
 
+    // Monitor if settings are changes while settings view is displayed
     override fun onViewCreated() {
         userSettings.registerOnSharedPreferenceChangeListener(this)
     }
@@ -34,6 +35,14 @@ class SettingsPresenter @Inject constructor(
         userSettings.unregisterOnSharedPreferenceChangeListener(this)
 
         super.onDestroy()
+    }
+
+    // if the user changes settings - reschedule background update checks
+
+    override fun onSharedPreferenceChanged(settings: SharedPreferences?, key: String?) {
+        if (key == settingsKeyBackgroundRefreshInterval) {
+            reschedulePeriodicNotifications()
+        }
     }
 
     private fun reschedulePeriodicNotifications() {
@@ -60,12 +69,6 @@ class SettingsPresenter @Inject constructor(
                     )
 
             view?.notifyAutomaticNewsUpdatesCheckScheduled()
-        }
-    }
-
-    override fun onSharedPreferenceChanged(settings: SharedPreferences?, key: String?) {
-        if (key == settingsKeyBackgroundRefreshInterval) {
-            reschedulePeriodicNotifications()
         }
     }
 

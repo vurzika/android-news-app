@@ -22,6 +22,6 @@ data class NewsArticle(
         @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
         val thumbnailData: Bitmap? = null
 ) {
-        @Ignore
-        var isStored: Boolean = false
+    @Ignore
+    var isStored: Boolean = false
 }
