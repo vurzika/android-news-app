@@ -10,7 +10,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.navArgs
@@ -19,8 +19,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.onramp.vurzika.newsapp.R
 import com.onramp.vurzika.newsapp.databinding.FragmentNewsDetailsBinding
 import com.onramp.vurzika.newsapp.repository.models.NewsArticle
-import com.onramp.vurzika.newsapp.ui.base.BaseNavigationFragment
 import com.onramp.vurzika.newsapp.ui.base.mvp.BaseContract
+import com.onramp.vurzika.newsapp.ui.base.mvp.BaseFragment
 import com.onramp.vurzika.newsapp.ui.newsdetails.NewsDetailsContract
 import com.onramp.vurzika.newsapp.ui.newsdetails.presenter.NewsDetailsPresenter
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,7 +28,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class NewsDetailsFragment : BaseNavigationFragment<NewsDetailsContract.View>(), NewsDetailsContract.View {
+class NewsDetailsFragment : BaseFragment<NewsDetailsContract.View>(), NewsDetailsContract.View {
 
     private lateinit var binding: FragmentNewsDetailsBinding
 
@@ -63,6 +63,13 @@ class NewsDetailsFragment : BaseNavigationFragment<NewsDetailsContract.View>(), 
         })
 
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // use fragment's toolbar as activity's main toolbar to populate menu
+        (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
     }
 
     // MVP
@@ -124,11 +131,5 @@ class NewsDetailsFragment : BaseNavigationFragment<NewsDetailsContract.View>(), 
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    // Navigation UI Configuration
-
-    override fun getToolbar(): Toolbar {
-        return binding.toolbar
     }
 }

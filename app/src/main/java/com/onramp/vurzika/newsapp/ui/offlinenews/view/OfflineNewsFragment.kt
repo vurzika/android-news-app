@@ -7,7 +7,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.onramp.vurzika.newsapp.R
 import com.onramp.vurzika.newsapp.databinding.FragmentOfflineNewsBinding
 import com.onramp.vurzika.newsapp.repository.models.NewsArticle
-import com.onramp.vurzika.newsapp.ui.base.BaseNavigationFragment
 import com.onramp.vurzika.newsapp.ui.base.mvp.BaseContract
+import com.onramp.vurzika.newsapp.ui.base.mvp.BaseFragment
 import com.onramp.vurzika.newsapp.ui.latestnews.view.NewsArticleClickListener
 import com.onramp.vurzika.newsapp.ui.latestnews.view.NewsArticlesListAdapter
 import com.onramp.vurzika.newsapp.ui.offlinenews.OfflineNewsContract
@@ -25,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class OfflineNewsFragment : BaseNavigationFragment<OfflineNewsContract.View>(), OfflineNewsContract.View {
+class OfflineNewsFragment : BaseFragment<OfflineNewsContract.View>(), OfflineNewsContract.View {
 
     private lateinit var binding: FragmentOfflineNewsBinding
 
@@ -81,8 +81,8 @@ class OfflineNewsFragment : BaseNavigationFragment<OfflineNewsContract.View>(), 
     override fun onResume() {
         super.onResume()
 
-        // refresh list UI on resume
-        adapter.notifyDataSetChanged()
+        // use fragment's toolbar as activity's main toolbar to populate menu
+        (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
     }
 
     // View
@@ -103,6 +103,7 @@ class OfflineNewsFragment : BaseNavigationFragment<OfflineNewsContract.View>(), 
         binding.newsList.visibility = View.VISIBLE
 
         adapter.submitList(newsArticles)
+        adapter.notifyDataSetChanged()
     }
 
     override fun showError(errorMessage: String?) {
@@ -136,11 +137,5 @@ class OfflineNewsFragment : BaseNavigationFragment<OfflineNewsContract.View>(), 
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    // Navigation UI configuration
-
-    override fun getToolbar(): Toolbar {
-        return binding.toolbar
     }
 }
