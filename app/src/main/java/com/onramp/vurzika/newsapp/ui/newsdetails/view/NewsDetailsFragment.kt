@@ -19,6 +19,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.onramp.vurzika.newsapp.R
 import com.onramp.vurzika.newsapp.databinding.FragmentNewsDetailsBinding
 import com.onramp.vurzika.newsapp.repository.models.NewsArticle
+import com.onramp.vurzika.newsapp.ui.base.NavigationToolbarObserver
 import com.onramp.vurzika.newsapp.ui.base.mvp.BaseContract
 import com.onramp.vurzika.newsapp.ui.base.mvp.BaseFragment
 import com.onramp.vurzika.newsapp.ui.newsdetails.NewsDetailsContract
@@ -62,14 +63,11 @@ class NewsDetailsFragment : BaseFragment<NewsDetailsContract.View>(), NewsDetail
                     }
         })
 
+        // Connect Fragment specific toolbar to navigation controller
+        lifecycle.addObserver(
+                NavigationToolbarObserver(requireActivity() as AppCompatActivity, binding.toolbar))
+
         return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        // use fragment's toolbar as activity's main toolbar to populate menu
-        (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
     }
 
     // MVP

@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.onramp.vurzika.newsapp.R
 import com.onramp.vurzika.newsapp.databinding.FragmentLatestNewsBinding
 import com.onramp.vurzika.newsapp.repository.models.NewsArticle
+import com.onramp.vurzika.newsapp.ui.base.NavigationToolbarObserver
 import com.onramp.vurzika.newsapp.ui.base.mvp.BaseContract
 import com.onramp.vurzika.newsapp.ui.base.mvp.BaseFragment
 import com.onramp.vurzika.newsapp.ui.latestnews.LatestNewsContract
@@ -50,14 +51,11 @@ class LatestNewsFragment : BaseFragment<LatestNewsContract.View>(), LatestNewsCo
             presenter.onRefreshRequested()
         }
 
+        // Connect Fragment specific toolbar to navigation controller
+        lifecycle.addObserver(
+                NavigationToolbarObserver(requireActivity() as AppCompatActivity, binding.toolbar))
+
         return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        // use fragment's toolbar as activity's main toolbar to populate menu
-        (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
     }
 
     // View

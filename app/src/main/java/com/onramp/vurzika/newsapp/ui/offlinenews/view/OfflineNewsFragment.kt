@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.onramp.vurzika.newsapp.R
 import com.onramp.vurzika.newsapp.databinding.FragmentOfflineNewsBinding
 import com.onramp.vurzika.newsapp.repository.models.NewsArticle
+import com.onramp.vurzika.newsapp.ui.base.NavigationToolbarObserver
 import com.onramp.vurzika.newsapp.ui.base.mvp.BaseContract
 import com.onramp.vurzika.newsapp.ui.base.mvp.BaseFragment
 import com.onramp.vurzika.newsapp.ui.latestnews.view.NewsArticleClickListener
@@ -50,6 +51,10 @@ class OfflineNewsFragment : BaseFragment<OfflineNewsContract.View>(), OfflineNew
 
         binding.newsList.adapter = adapter
 
+        // Connect Fragment specific toolbar to navigation controller
+        lifecycle.addObserver(
+                NavigationToolbarObserver(requireActivity() as AppCompatActivity, binding.toolbar))
+
         initSwipeToDelete()
 
         return binding.root
@@ -76,13 +81,6 @@ class OfflineNewsFragment : BaseFragment<OfflineNewsContract.View>(), OfflineNew
                 }
             }
         }).attachToRecyclerView(binding.newsList)
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        // use fragment's toolbar as activity's main toolbar to populate menu
-        (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
     }
 
     // View
