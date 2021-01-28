@@ -61,7 +61,7 @@ class LatestNewsFragment : BaseFragment<LatestNewsContract.View>(), LatestNewsCo
     // View
 
     private fun hideAllUiElements() {
-        binding.newsSwipeRefreshLayout.visibility = View.GONE
+        binding.newsList.visibility = View.GONE
         binding.viewErrorMessage.visibility = View.GONE
         binding.viewOfflineMode.visibility = View.GONE
         binding.newsSwipeRefreshLayout.isRefreshing = false
@@ -85,10 +85,10 @@ class LatestNewsFragment : BaseFragment<LatestNewsContract.View>(), LatestNewsCo
     override fun showNews(newsArticles: List<NewsArticle>) {
         hideAllUiElements()
 
-        binding.newsSwipeRefreshLayout.visibility = View.VISIBLE
-
         adapter.submitList(newsArticles)
         adapter.notifyDataSetChanged()
+
+        binding.newsList.visibility = View.VISIBLE
     }
 
     override fun showError(errorMessage: String?) {

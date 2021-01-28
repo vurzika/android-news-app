@@ -98,10 +98,10 @@ class OfflineNewsFragment : BaseFragment<OfflineNewsContract.View>(), OfflineNew
     override fun showNews(newsArticles: List<NewsArticle>) {
         hideAllUiElements()
 
-        binding.newsList.visibility = View.VISIBLE
-
         adapter.submitList(newsArticles)
         adapter.notifyDataSetChanged()
+
+        binding.newsList.visibility = View.VISIBLE
     }
 
     override fun showError(errorMessage: String?) {
@@ -115,7 +115,6 @@ class OfflineNewsFragment : BaseFragment<OfflineNewsContract.View>(), OfflineNew
 
         binding.viewNoFavorites.visibility = View.VISIBLE
     }
-
 
     // Options Menu
 
