@@ -13,6 +13,7 @@ abstract class BasePresenter<V : BaseContract.View> : BaseContract.Presenter<V>,
     protected var view: V? = null
 
     // Coroutines Support (to run on main thread)
+    // allows every presenter to launch coroutine functions on their scope
 
     private var job: Job = Job()
 

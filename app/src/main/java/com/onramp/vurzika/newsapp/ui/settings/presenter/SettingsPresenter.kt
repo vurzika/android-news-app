@@ -14,18 +14,19 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class SettingsPresenter @Inject constructor(
-        @ApplicationContext val context: Context,
+        @ApplicationContext private val context: Context,
         private val userSettings: SharedPreferences
 ) : BasePresenter<SettingsContract.View>(), SettingsContract.Presenter, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private companion object {
-        const val WORD_NAME_NEWS_AUTO_REFRESH = "WORD_NAME_NEWS_AUTO_REFRESH"
+        const val WORK_NAME_NEWS_AUTO_REFRESH = "WORK_NAME_NEWS_AUTO_REFRESH"
     }
 
     private val settingsKeyBackgroundRefreshInterval by lazy {
         context.getString(R.string.setting_key_background_refresh_interval)
     }
 
+    // Monitor if settings are changes while settings view is displayed
     override fun onViewCreated() {
         userSettings.registerOnSharedPreferenceChangeListener(this)
     }
@@ -36,12 +37,20 @@ class SettingsPresenter @Inject constructor(
         super.onDestroy()
     }
 
+    // if the user changes settings - reschedule background update checks
+
+    override fun onSharedPreferenceChanged(settings: SharedPreferences?, key: String?) {
+        if (key == settingsKeyBackgroundRefreshInterval) {
+            reschedulePeriodicNotifications()
+        }
+    }
+
     private fun reschedulePeriodicNotifications() {
 
         val currentRefreshInterval = getCurrentRefreshInterval()
 
         if (currentRefreshInterval == 0L) {
-            WorkManager.getInstance(context).cancelUniqueWork(WORD_NAME_NEWS_AUTO_REFRESH)
+            WorkManager.getInstance(context).cancelUniqueWork(WORK_NAME_NEWS_AUTO_REFRESH)
 
             view?.notifyAutomaticNewsUpdatesCheckCancelled()
         } else {
@@ -54,18 +63,12 @@ class SettingsPresenter @Inject constructor(
 
             WorkManager.getInstance(context)
                     .enqueueUniquePeriodicWork(
-                            WORD_NAME_NEWS_AUTO_REFRESH,
+                            WORK_NAME_NEWS_AUTO_REFRESH,
                             ExistingPeriodicWorkPolicy.REPLACE,
                             periodicWork
                     )
 
             view?.notifyAutomaticNewsUpdatesCheckScheduled()
-        }
-    }
-
-    override fun onSharedPreferenceChanged(settings: SharedPreferences?, key: String?) {
-        if (key == settingsKeyBackgroundRefreshInterval) {
-            reschedulePeriodicNotifications()
         }
     }
 

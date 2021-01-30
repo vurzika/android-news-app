@@ -11,6 +11,8 @@ import com.squareup.picasso.Picasso
  * This file provides set of binding adapters used by data-binding
  */
 
+// special binder used for divider view
+// to allow converting dimension (Float) to margin (Int)
 @BindingAdapter("dividerOffset")
 fun setDividerOffset(view: View, dimen: Float) {
     // custom binding adapter to convert "float" dimension to "int" offsets
@@ -20,12 +22,12 @@ fun setDividerOffset(view: View, dimen: Float) {
 }
 
 @BindingAdapter("imageUrl")
-fun setImageUrl(imageView: ImageView, url: String?) {
+fun ImageView.setImageUrl(url: String?) {
     url?.let {
         Picasso.get()
                 .load(it)
                 .fit()
                 .centerInside()
-                .into(imageView)
+                .into(this)
     }
 }

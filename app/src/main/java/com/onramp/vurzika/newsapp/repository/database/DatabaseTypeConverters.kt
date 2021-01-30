@@ -11,6 +11,7 @@ import java.util.Date
 
 class DatabaseTypeConverters {
 
+    // Storing Dates as timestamps
     @TypeConverter
     fun fromTimestamp(value: Long?): Date? {
         return if (value == null) null else Date(value)
@@ -21,6 +22,7 @@ class DatabaseTypeConverters {
         return date?.time
     }
 
+    // Storing Bitmap as ByteArray as
     @TypeConverter
     fun fromByteArrayToBitmap(data: ByteArray?): Bitmap? {
         return if (data != null) {

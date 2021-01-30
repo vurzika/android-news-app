@@ -7,21 +7,22 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import com.onramp.vurzika.newsapp.R
 import com.onramp.vurzika.newsapp.databinding.FragmentLatestNewsBinding
 import com.onramp.vurzika.newsapp.repository.models.NewsArticle
-import com.onramp.vurzika.newsapp.ui.base.BaseNavigationFragment
+import com.onramp.vurzika.newsapp.ui.base.NavigationToolbarObserver
 import com.onramp.vurzika.newsapp.ui.base.mvp.BaseContract
+import com.onramp.vurzika.newsapp.ui.base.mvp.BaseFragment
 import com.onramp.vurzika.newsapp.ui.latestnews.LatestNewsContract
 import com.onramp.vurzika.newsapp.ui.latestnews.presenter.LatestNewsPresenter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class LatestNewsFragment : BaseNavigationFragment<LatestNewsContract.View>(), LatestNewsContract.View {
+class LatestNewsFragment : BaseFragment<LatestNewsContract.View>(), LatestNewsContract.View {
 
     private lateinit var binding: FragmentLatestNewsBinding
 
@@ -50,20 +51,17 @@ class LatestNewsFragment : BaseNavigationFragment<LatestNewsContract.View>(), La
             presenter.onRefreshRequested()
         }
 
+        // Connect Fragment specific toolbar to navigation controller
+        lifecycle.addObserver(
+                NavigationToolbarObserver(requireActivity() as AppCompatActivity, binding.toolbar))
+
         return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        // refresh list UI on resume
-        adapter.notifyDataSetChanged()
     }
 
     // View
 
     private fun hideAllUiElements() {
-        binding.newsSwipeRefreshLayout.visibility = View.GONE
+        binding.newsList.visibility = View.GONE
         binding.viewErrorMessage.visibility = View.GONE
         binding.viewOfflineMode.visibility = View.GONE
         binding.newsSwipeRefreshLayout.isRefreshing = false
@@ -87,9 +85,10 @@ class LatestNewsFragment : BaseNavigationFragment<LatestNewsContract.View>(), La
     override fun showNews(newsArticles: List<NewsArticle>) {
         hideAllUiElements()
 
-        binding.newsSwipeRefreshLayout.visibility = View.VISIBLE
-
         adapter.submitList(newsArticles)
+        adapter.notifyDataSetChanged()
+
+        binding.newsList.visibility = View.VISIBLE
     }
 
     override fun showError(errorMessage: String?) {
@@ -122,11 +121,5 @@ class LatestNewsFragment : BaseNavigationFragment<LatestNewsContract.View>(), La
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    // Navigation UI configuration
-
-    override fun getToolbar(): Toolbar {
-        return binding.toolbar
     }
 }

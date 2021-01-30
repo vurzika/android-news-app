@@ -14,8 +14,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class NewsDetailsPresenter @Inject constructor(
-        @ApplicationContext val context: Context,
-        private var newsRepository: NewsRepository
+        @ApplicationContext private val context: Context,
+        private val newsRepository: NewsRepository
 ) : BasePresenter<NewsDetailsContract.View>(), NewsDetailsContract.Presenter {
 
     private lateinit var newsArticle: NewsArticle
@@ -62,6 +62,7 @@ class NewsDetailsPresenter @Inject constructor(
 
         newsArticle.url?.let {
 
+            // copy link to clipboard as text with link
             clipboardManager.setPrimaryClip(ClipData.newUri(
                     context.contentResolver,
                     newsArticle.summary,

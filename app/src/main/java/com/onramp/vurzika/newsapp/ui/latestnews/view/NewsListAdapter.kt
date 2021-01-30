@@ -13,15 +13,10 @@ import com.onramp.vurzika.newsapp.repository.models.NewsArticle
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class NewsArticlesListAdapter @Inject constructor() :
-        ListAdapter<NewsArticle, NewsArticlesListAdapter.ViewHolder>(NewsArticleDiffCallback()) {
-
-    @Inject
-    lateinit var userSettings: SharedPreferences
-
-    @Inject
-    @ApplicationContext
-    lateinit var context: Context
+class NewsArticlesListAdapter @Inject constructor(
+        @ApplicationContext private val context: Context,
+        private val userSettings: SharedPreferences,
+) : ListAdapter<NewsArticle, NewsArticlesListAdapter.ViewHolder>(NewsArticleDiffCallback()) {
 
     lateinit var onItemClickListener: NewsArticleClickListener
 

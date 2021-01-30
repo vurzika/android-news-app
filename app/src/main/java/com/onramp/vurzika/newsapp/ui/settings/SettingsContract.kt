@@ -2,7 +2,7 @@ package com.onramp.vurzika.newsapp.ui.settings
 
 import com.onramp.vurzika.newsapp.ui.base.mvp.BaseContract
 
-class SettingsContract {
+interface SettingsContract {
 
     interface View : BaseContract.View {
         fun notifyAutomaticNewsUpdatesCheckScheduled()

@@ -28,6 +28,7 @@ class NotificationsManager @Inject constructor(
         registerNotificationChannel()
     }
 
+    // Register channel to be able to show notifications on Android O+
     private fun registerNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = context.getString(R.string.notifications_channel_name)

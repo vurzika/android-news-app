@@ -10,7 +10,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.navArgs
@@ -19,8 +19,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.onramp.vurzika.newsapp.R
 import com.onramp.vurzika.newsapp.databinding.FragmentNewsDetailsBinding
 import com.onramp.vurzika.newsapp.repository.models.NewsArticle
-import com.onramp.vurzika.newsapp.ui.base.BaseNavigationFragment
+import com.onramp.vurzika.newsapp.ui.base.NavigationToolbarObserver
 import com.onramp.vurzika.newsapp.ui.base.mvp.BaseContract
+import com.onramp.vurzika.newsapp.ui.base.mvp.BaseFragment
 import com.onramp.vurzika.newsapp.ui.newsdetails.NewsDetailsContract
 import com.onramp.vurzika.newsapp.ui.newsdetails.presenter.NewsDetailsPresenter
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,7 +29,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class NewsDetailsFragment : BaseNavigationFragment<NewsDetailsContract.View>(), NewsDetailsContract.View {
+class NewsDetailsFragment : BaseFragment<NewsDetailsContract.View>(), NewsDetailsContract.View {
 
     private lateinit var binding: FragmentNewsDetailsBinding
 
@@ -50,6 +51,8 @@ class NewsDetailsFragment : BaseNavigationFragment<NewsDetailsContract.View>(), 
             presenter.onSetFavoriteSelected()
         }
 
+        // To change location of fab button when toolbar is collapsed
+        // to avoid overlap with menu items
         binding.appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
 
             (binding.fab.layoutParams as CoordinatorLayout.LayoutParams).anchorGravity =
@@ -59,6 +62,10 @@ class NewsDetailsFragment : BaseNavigationFragment<NewsDetailsContract.View>(), 
                         Gravity.TOP or Gravity.END
                     }
         })
+
+        // Connect Fragment specific toolbar to navigation controller
+        lifecycle.addObserver(
+                NavigationToolbarObserver(requireActivity() as AppCompatActivity, binding.toolbar))
 
         return binding.root
     }
@@ -87,6 +94,7 @@ class NewsDetailsFragment : BaseNavigationFragment<NewsDetailsContract.View>(), 
     override fun showError(errorMessage: String) {
         binding.loadingIndicator.visibility = View.GONE
         binding.appBar.setExpanded(false)
+        setMenuVisibility(false)
 
         binding.viewErrorMessage.visibility = View.VISIBLE
     }
@@ -121,11 +129,5 @@ class NewsDetailsFragment : BaseNavigationFragment<NewsDetailsContract.View>(), 
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    // Navigation UI Configuration
-
-    override fun getToolbar(): Toolbar {
-        return binding.toolbar
     }
 }

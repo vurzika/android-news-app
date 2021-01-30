@@ -11,7 +11,7 @@ import com.onramp.vurzika.newsapp.ui.settings.presenter.SettingsPresenter
 import javax.inject.Inject
 
 class SettingsFragment @Inject constructor(
-        val presenter: SettingsPresenter
+        private val presenter: SettingsPresenter
 ) : PreferenceFragmentCompat(), SettingsContract.View {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {

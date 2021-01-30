@@ -6,10 +6,9 @@ import com.onramp.vurzika.newsapp.ui.offlinenews.OfflineNewsContract
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class OfflineNewsPresenter @Inject constructor() : BasePresenter<OfflineNewsContract.View>(), OfflineNewsContract.Presenter {
-
-    @Inject
-    lateinit var newsRepository: NewsRepository
+class OfflineNewsPresenter @Inject constructor(
+        private val newsRepository: NewsRepository
+) : BasePresenter<OfflineNewsContract.View>(), OfflineNewsContract.Presenter {
 
     override fun onViewCreated() {
         refreshOfflineNews()
